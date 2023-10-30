@@ -1,4 +1,4 @@
-package dev.catsuperberg.e_commerce_exercise.client.ui.theme
+package dev.catsuperberg.e_commerce_exercise.client.presentation.ui.theme
 
 import android.app.Activity
 import android.os.Build
