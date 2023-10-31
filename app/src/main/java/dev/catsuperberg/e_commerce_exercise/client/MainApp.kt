@@ -20,6 +20,8 @@ import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.ItemDetailsSen
 import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.PaginatedItemProvider
 import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.main.IMainViewModel
 import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.main.MainViewModel
+import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.order.form.IOrderFormViewModel
+import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.order.form.OrderFormViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -62,6 +64,7 @@ class MainApp : Application() {
             factoryOf(::ItemMessageComposer) bind IItemMessageComposer::class
             factoryOf(::ItemDetailsSender) bind IItemDetailsSender::class
 
+            factory { OrderFormViewModel(get()) } bind IOrderFormViewModel::class
             factory { MainViewModel(get(), get(), get()) } bind IMainViewModel::class
         }
 

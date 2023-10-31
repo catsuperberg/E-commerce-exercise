@@ -41,10 +41,13 @@ class MainNode(
         class OrderFormScreen(val item: Item) : NavTarget()
 
         @Parcelize
+        object AuthScreen : NavTarget()
+
+        @Parcelize
         object OrdersScreen : NavTarget()
 
         @Parcelize
-        object ItemEditScreen : NavTarget()
+        class ItemEditScreen(val itemId: String) : NavTarget()
     }
 
     override fun resolve(navTarget: NavTarget, buildContext: BuildContext): Node =
@@ -56,7 +59,7 @@ class MainNode(
                 MainScreen(get {parametersOf(callbacks)})
             }
             is NavTarget.OrderFormScreen -> screenNode(buildContext) {
-                OrderFormScreen()
+                OrderFormScreen(get { parametersOf(navTarget.item) })
             }
             else -> screenNode(buildContext) { MainScreen(get()) }
         }
