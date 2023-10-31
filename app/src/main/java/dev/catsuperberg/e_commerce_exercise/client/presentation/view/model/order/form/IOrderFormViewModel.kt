@@ -1,7 +1,6 @@
 package dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.order.form
 
 import androidx.compose.ui.text.input.TextFieldValue
-import dev.catsuperberg.e_commerce_exercise.client.domain.model.Item
 import kotlinx.coroutines.flow.StateFlow
 
 interface IOrderFormViewModel {

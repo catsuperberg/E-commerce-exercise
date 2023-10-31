@@ -8,6 +8,7 @@ object OrderSchema {
     val customerEmail = "customer_email"
     val itemId = "item_id"
     val sum = "sum"
+    val created = "created"
     val fulfilled = "fulfilled"
     val canceled = "canceled"
 }

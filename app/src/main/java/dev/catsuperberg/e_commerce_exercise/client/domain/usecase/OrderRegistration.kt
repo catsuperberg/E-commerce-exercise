@@ -14,6 +14,7 @@ class OrderRegistration(private val endPoint: IOrderEndPoint) : IOrderRegistrati
             customerEmail = customer.email,
             itemId = item.id,
             sum = item.price,
+            created = null,
             fulfilled = false,
             canceled = false
         )
