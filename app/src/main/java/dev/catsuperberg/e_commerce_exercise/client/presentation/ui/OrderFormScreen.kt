@@ -63,6 +63,10 @@ private fun CustomerContactInfoInputs(viewModel: IOrderFormViewModel, modifier: 
     val phoneString = viewModel.customerPhone.collectAsState()
     val emailString = viewModel.customerEmail.collectAsState()
 
+    val nameInvalid = viewModel.customerNameInvalid.collectAsState()
+    val phoneInvalid = viewModel.customerPhoneInvalid.collectAsState()
+    val emailInvalid = viewModel.customerEmailInvalid.collectAsState()
+
     val focusManager = LocalFocusManager.current
     val phoneTransformation = remember { PhoneVisualTransformation() }
 
@@ -84,6 +88,7 @@ private fun CustomerContactInfoInputs(viewModel: IOrderFormViewModel, modifier: 
             onValueChange = viewModel::onNameChange,
             modifier = Modifier
                 .fillMaxWidth(),
+            isError = nameInvalid.value
         )
 
         OutlinedTextField(
@@ -101,6 +106,7 @@ private fun CustomerContactInfoInputs(viewModel: IOrderFormViewModel, modifier: 
             visualTransformation = phoneTransformation,
             modifier = Modifier
                 .fillMaxWidth(),
+            isError = phoneInvalid.value
         )
 
         OutlinedTextField(
@@ -117,10 +123,11 @@ private fun CustomerContactInfoInputs(viewModel: IOrderFormViewModel, modifier: 
             onValueChange = viewModel::onEmailChange,
             modifier = Modifier
                 .fillMaxWidth(),
+            isError = emailInvalid.value
         )
-        
+
         Text(
-            text = "Пожалуйста заполните контактные данные для оформления заказа",
+            text = stringResource(R.string.fill_contact_details),
             style = MaterialTheme.typography.bodyMedium,
             textAlign = TextAlign.Center,
         )

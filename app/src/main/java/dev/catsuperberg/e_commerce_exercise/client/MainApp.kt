@@ -10,13 +10,19 @@ import coil.request.CachePolicy
 import dev.catsuperberg.e_commerce_exercise.client.data.repository.item.IItemMapper
 import dev.catsuperberg.e_commerce_exercise.client.data.repository.item.ItemPagingSource
 import dev.catsuperberg.e_commerce_exercise.client.data.repository.item.PlaceholderItemMapper
+import dev.catsuperberg.e_commerce_exercise.client.data.repository.order.IOrderEndPoint
+import dev.catsuperberg.e_commerce_exercise.client.data.repository.order.IOrderMapper
+import dev.catsuperberg.e_commerce_exercise.client.data.repository.order.OrderEndPoint
+import dev.catsuperberg.e_commerce_exercise.client.data.repository.order.OrderMapper
 import dev.catsuperberg.e_commerce_exercise.client.domain.service.ClearCacheUriImageAccess
 import dev.catsuperberg.e_commerce_exercise.client.domain.service.IItemMessageComposer
 import dev.catsuperberg.e_commerce_exercise.client.domain.service.IUriImageAccess
 import dev.catsuperberg.e_commerce_exercise.client.domain.service.ItemMessageComposer
 import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.IItemDetailsSender
+import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.IOrderRegistration
 import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.IPaginatedItemProvider
 import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.ItemDetailsSender
+import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.OrderRegistration
 import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.PaginatedItemProvider
 import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.main.IMainViewModel
 import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.main.MainViewModel
@@ -64,7 +70,12 @@ class MainApp : Application() {
             factoryOf(::ItemMessageComposer) bind IItemMessageComposer::class
             factoryOf(::ItemDetailsSender) bind IItemDetailsSender::class
 
-            factory { OrderFormViewModel(get()) } bind IOrderFormViewModel::class
+
+            factoryOf(::OrderMapper) bind IOrderMapper::class
+            factoryOf(::OrderEndPoint) bind IOrderEndPoint::class
+            factoryOf(::OrderRegistration) bind IOrderRegistration::class
+
+            factory { OrderFormViewModel(get(), get(), get()) } bind IOrderFormViewModel::class
             factory { MainViewModel(get(), get(), get()) } bind IMainViewModel::class
         }
 

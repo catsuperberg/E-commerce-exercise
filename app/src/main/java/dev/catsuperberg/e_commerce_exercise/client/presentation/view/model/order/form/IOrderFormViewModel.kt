@@ -1,12 +1,17 @@
 package dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.order.form
 
 import androidx.compose.ui.text.input.TextFieldValue
+import dev.catsuperberg.e_commerce_exercise.client.domain.model.Item
 import kotlinx.coroutines.flow.StateFlow
 
 interface IOrderFormViewModel {
     val customerName: StateFlow<String>
     val customerPhone: StateFlow<TextFieldValue>
     val customerEmail: StateFlow<String>
+
+    val customerNameInvalid: StateFlow<Boolean>
+    val customerPhoneInvalid: StateFlow<Boolean>
+    val customerEmailInvalid: StateFlow<Boolean>
 
     val itemName: String
     val itemPrice: String
@@ -17,4 +22,8 @@ interface IOrderFormViewModel {
     fun onEmailChange(value: String)
 
     fun onSendOrder()
+
+    data class NavCallbacks(
+        val onOrderOpened: () -> Unit,
+    )
 }

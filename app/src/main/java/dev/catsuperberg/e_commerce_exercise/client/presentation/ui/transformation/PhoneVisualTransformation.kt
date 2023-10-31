@@ -1,6 +1,5 @@
 package dev.catsuperberg.e_commerce_exercise.client.presentation.ui.transformation
 
-import android.util.Log
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
@@ -27,7 +26,6 @@ class PhoneVisualTransformation : VisualTransformation {
             append("${phoneDeque.pollOrFill(2, placeholderChar)}-")
             append(phoneDeque.pollOrFill(2, placeholderChar))
         }
-        Log.d("D", "Phone number: $string")
         return string
     }
 

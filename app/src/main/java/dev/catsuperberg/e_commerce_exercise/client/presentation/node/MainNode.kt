@@ -8,12 +8,14 @@ import com.bumble.appyx.core.modality.BuildContext
 import com.bumble.appyx.core.node.Node
 import com.bumble.appyx.core.node.ParentNode
 import com.bumble.appyx.navmodel.backstack.BackStack
+import com.bumble.appyx.navmodel.backstack.operation.pop
 import com.bumble.appyx.navmodel.backstack.operation.push
 import com.bumble.appyx.navmodel.backstack.operation.singleTop
 import dev.catsuperberg.e_commerce_exercise.client.domain.model.Item
 import dev.catsuperberg.e_commerce_exercise.client.presentation.ui.MainScreen
 import dev.catsuperberg.e_commerce_exercise.client.presentation.ui.OrderFormScreen
 import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.main.IMainViewModel
+import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.order.form.IOrderFormViewModel
 import kotlinx.parcelize.Parcelize
 import org.koin.core.component.KoinScopeComponent
 import org.koin.core.component.createScope
@@ -59,7 +61,10 @@ class MainNode(
                 MainScreen(get {parametersOf(callbacks)})
             }
             is NavTarget.OrderFormScreen -> screenNode(buildContext) {
-                OrderFormScreen(get { parametersOf(navTarget.item) })
+                val callbacks = IOrderFormViewModel.NavCallbacks(
+                    onOrderOpened = { backStack.pop() }
+                )
+                OrderFormScreen(get { parametersOf(callbacks, navTarget.item) })
             }
             else -> screenNode(buildContext) { MainScreen(get()) }
         }
