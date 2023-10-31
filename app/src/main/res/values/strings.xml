@@ -6,4 +6,6 @@
     <string name="buy">Купить</string>
     <string name="item_details_reminder">"Вы приобретаете: %1$s \nАрт.: %2$s\nСтоимость: %3$s"</string>
     <string name="fill_contact_details">Пожалуйста заполните контактные данные для оформления заказа</string>
+    <string name="store_name">Boo-tique</string>
+    <string name="authentication">Authentication</string>
 </resources>

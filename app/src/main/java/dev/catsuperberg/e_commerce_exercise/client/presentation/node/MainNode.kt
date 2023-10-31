@@ -56,7 +56,10 @@ class MainNode(
         when (navTarget) {
             is NavTarget.MainScreen -> screenNode(buildContext) {
                 val callbacks = IMainViewModel.NavCallbacks(
-                    onBuyItem = { item -> backStack.push(NavTarget.OrderFormScreen(item)) }
+                    onBuyItem = { item -> backStack.push(NavTarget.OrderFormScreen(item)) },
+                    onAuth = { backStack.push(NavTarget.AuthScreen) },
+                    onOrders = {},
+                    onEditItem = {}
                 )
                 MainScreen(get {parametersOf(callbacks)})
             }
@@ -66,7 +69,15 @@ class MainNode(
                 )
                 OrderFormScreen(get { parametersOf(callbacks, navTarget.item) })
             }
-            else -> screenNode(buildContext) { MainScreen(get()) }
+            is NavTarget.AuthScreen -> screenNode(buildContext) {
+                screenNode(buildContext) { MainScreen(get()) }
+            }
+            is NavTarget.OrdersScreen -> screenNode(buildContext) {
+                screenNode(buildContext) { MainScreen(get()) }
+            }
+            is NavTarget.ItemEditScreen -> screenNode(buildContext) {
+                screenNode(buildContext) { MainScreen(get()) }
+            }
         }
 
     @Composable

@@ -16,6 +16,10 @@ class MainViewModel(
     override val items = itemProvider.createItemPagerFlow().cachedIn(viewModelScope)
     override val selectedItem: MutableStateFlow<Int?> = MutableStateFlow(null)
 
+    override fun onAuthScreen() {
+        navCallbacks.onAuth()
+    }
+
     override fun onCardClick(index: Int) {
         if(selectedItem.value == index)
             selectedItem.value = null

@@ -9,11 +9,16 @@ interface IMainViewModel {
     val items: Flow<PagingData<Item>>
     val selectedItem: StateFlow<Int?>
 
+    fun onAuthScreen()
+
     fun onCardClick(index: Int)
     fun onBuy(item: Item)
     fun onShare(item: Item)
 
     data class NavCallbacks(
         val onBuyItem: (item: Item) -> Unit,
+        val onAuth: () -> Unit,
+        val onOrders: () -> Unit,
+        val onEditItem: (item: Item) -> Unit
     )
 }

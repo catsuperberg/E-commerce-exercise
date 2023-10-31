@@ -32,7 +32,7 @@ class ItemPagingSource(
     }
 
     companion object {
-        const val pageSize = 5
+        const val pageSize = 15
 
         val itemQuery = FirebaseFirestore.getInstance()
             .collection(ItemSchema.collectionName)
