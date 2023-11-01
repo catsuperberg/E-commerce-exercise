@@ -31,11 +31,11 @@ import androidx.paging.compose.itemContentType
 import androidx.paging.compose.itemKey
 import dev.catsuperberg.e_commerce_exercise.client.R
 import dev.catsuperberg.e_commerce_exercise.client.presentation.ui.common.ProgressIndicator
-import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.main.IMainViewModel
+import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.store.front.IStoreFrontViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(viewModel: IMainViewModel) {
+fun StoreFrontScreen(viewModel: IStoreFrontViewModel) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -80,7 +80,7 @@ fun MainScreen(viewModel: IMainViewModel) {
         val refresh = pagingItems.loadState.refresh
         val append = pagingItems.loadState.append
 
-        Column (modifier = Modifier.padding(innerPadding)) {
+        Column(modifier = Modifier.padding(innerPadding)) {
             LazyColumn {
                 items(
                     count = pagingItems.itemCount,

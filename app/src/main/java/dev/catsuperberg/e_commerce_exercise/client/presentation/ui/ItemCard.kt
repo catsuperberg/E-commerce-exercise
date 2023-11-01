@@ -27,11 +27,11 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import dev.catsuperberg.e_commerce_exercise.client.R
 import dev.catsuperberg.e_commerce_exercise.client.domain.model.Item
-import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.main.IMainViewModel
+import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.store.front.IStoreFrontViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ItemCard(item: Item, index: Int, viewModel: IMainViewModel) {
+fun ItemCard(item: Item, index: Int, viewModel: IStoreFrontViewModel) {
     Card(
         onClick = { viewModel.onCardClick(index) },
         shape = MaterialTheme.shapes.large,

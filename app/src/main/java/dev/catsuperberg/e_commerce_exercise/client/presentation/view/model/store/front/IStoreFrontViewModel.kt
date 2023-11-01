@@ -1,11 +1,11 @@
-package dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.main
+package dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.store.front
 
 import androidx.paging.PagingData
 import dev.catsuperberg.e_commerce_exercise.client.domain.model.Item
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 
-interface IMainViewModel {
+interface IStoreFrontViewModel {
     val items: Flow<PagingData<Item>>
     val selectedItem: StateFlow<Int?>
 

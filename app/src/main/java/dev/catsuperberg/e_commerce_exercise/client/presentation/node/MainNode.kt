@@ -2,6 +2,7 @@ package dev.catsuperberg.e_commerce_exercise.client.presentation.node
 
 import android.os.Parcelable
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import com.bumble.appyx.core.composable.Children
 import com.bumble.appyx.core.modality.BuildContext
@@ -11,13 +12,19 @@ import com.bumble.appyx.navmodel.backstack.BackStack
 import com.bumble.appyx.navmodel.backstack.operation.pop
 import com.bumble.appyx.navmodel.backstack.operation.push
 import com.bumble.appyx.navmodel.backstack.operation.singleTop
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import dev.catsuperberg.e_commerce_exercise.client.domain.model.Item
+import dev.catsuperberg.e_commerce_exercise.client.domain.service.IAuthState
 import dev.catsuperberg.e_commerce_exercise.client.presentation.ui.AuthScreen
-import dev.catsuperberg.e_commerce_exercise.client.presentation.ui.MainScreen
+import dev.catsuperberg.e_commerce_exercise.client.presentation.ui.ManagerStoreFrontScreen
+import dev.catsuperberg.e_commerce_exercise.client.presentation.ui.StoreFrontScreen
 import dev.catsuperberg.e_commerce_exercise.client.presentation.ui.OrderFormScreen
 import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.auth.IAuthViewModel
-import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.main.IMainViewModel
+import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.store.front.IStoreFrontViewModel
 import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.order.form.IOrderFormViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.coroutineScope
 import kotlinx.parcelize.Parcelize
 import org.koin.core.component.KoinScopeComponent
 import org.koin.core.component.createScope
@@ -27,8 +34,9 @@ import org.koin.core.scope.Scope
 
 class MainNode(
     buildContext: BuildContext,
+    private val authState: IAuthState,
     private val backStack: BackStack<NavTarget> = BackStack(
-        initialElement = NavTarget.MainScreen,
+        initialElement = NavTarget.StoreFrontScreen,
         savedStateMap = buildContext.savedStateMap,
     ),
 ) : ParentNode<MainNode.NavTarget>(
@@ -39,7 +47,7 @@ class MainNode(
 
     sealed class NavTarget : Parcelable {
         @Parcelize
-        object MainScreen : NavTarget()
+        object StoreFrontScreen : NavTarget()
 
         @Parcelize
         class OrderFormScreen(val item: Item) : NavTarget()
@@ -56,14 +64,20 @@ class MainNode(
 
     override fun resolve(navTarget: NavTarget, buildContext: BuildContext): Node =
         when (navTarget) {
-            is NavTarget.MainScreen -> screenNode(buildContext) {
-                val callbacks = IMainViewModel.NavCallbacks(
+            is NavTarget.StoreFrontScreen -> screenNode(buildContext) {
+                val signedIn = authState.signedIn.collectAsState()
+                val callbacks = IStoreFrontViewModel.NavCallbacks(
                     onBuyItem = { item -> backStack.push(NavTarget.OrderFormScreen(item)) },
                     onAuth = { backStack.push(NavTarget.AuthScreen) },
                     onOrders = {},
                     onEditItem = {}
                 )
-                MainScreen(get {parametersOf(callbacks)})
+                println("authState: " + signedIn.value)
+                println("Firebase.auth.currentUser: " + Firebase.auth.currentUser)
+                if(signedIn.value)
+                    ManagerStoreFrontScreen()
+                else
+                    StoreFrontScreen(get { parametersOf(callbacks) })
             }
             is NavTarget.OrderFormScreen -> screenNode(buildContext) {
                 val callbacks = IOrderFormViewModel.NavCallbacks(
@@ -72,14 +86,16 @@ class MainNode(
                 OrderFormScreen(get { parametersOf(callbacks, navTarget.item) })
             }
             is NavTarget.AuthScreen -> screenNode(buildContext) {
-                val callbacks = IAuthViewModel.NavCallbacks( onSuccess = { backStack.pop() } )
+                val callbacks = IAuthViewModel.NavCallbacks( onSuccess = {
+                    backStack.pop()
+                } )
                 AuthScreen(get { parametersOf(callbacks) })
             }
             is NavTarget.OrdersScreen -> screenNode(buildContext) {
-                MainScreen(get())
+                StoreFrontScreen(get())
             }
             is NavTarget.ItemEditScreen -> screenNode(buildContext) {
-                MainScreen(get())
+                StoreFrontScreen(get())
             }
         }
 
@@ -89,6 +105,6 @@ class MainNode(
     }
 
     override fun onChildFinished(child: Node) {
-        backStack.singleTop(NavTarget.MainScreen)
+        backStack.singleTop(NavTarget.StoreFrontScreen)
     }
 }

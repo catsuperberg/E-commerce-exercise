@@ -29,8 +29,8 @@ import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.OrderRegistrat
 import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.PaginatedItemProvider
 import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.auth.AuthViewModel
 import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.auth.IAuthViewModel
-import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.main.IMainViewModel
-import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.main.MainViewModel
+import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.store.front.IStoreFrontViewModel
+import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.store.front.StoreFrontViewModel
 import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.order.form.IOrderFormViewModel
 import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.order.form.OrderFormViewModel
 import org.koin.android.ext.koin.androidContext
@@ -83,7 +83,7 @@ class MainApp : Application() {
 
             singleOf(::AccountService) binds(arrayOf(IAccountService::class, IAuthState::class))
 
-            factory { MainViewModel(get(), get(), get()) } bind IMainViewModel::class
+            factory { StoreFrontViewModel(get(), get(), get()) } bind IStoreFrontViewModel::class
             factory { AuthViewModel(get(), get()) } bind IAuthViewModel::class
             factory { OrderFormViewModel(get(), get(), get()) } bind IOrderFormViewModel::class
         }

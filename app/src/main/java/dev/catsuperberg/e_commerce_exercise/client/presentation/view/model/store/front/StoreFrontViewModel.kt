@@ -1,4 +1,4 @@
-package dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.main
+package dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.store.front
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,11 +8,11 @@ import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.IItemDetailsSe
 import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.IPaginatedItemProvider
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class MainViewModel(
-    private val navCallbacks: IMainViewModel.NavCallbacks,
+class StoreFrontViewModel(
+    private val navCallbacks: IStoreFrontViewModel.NavCallbacks,
     private val detailsSender: IItemDetailsSender,
     itemProvider: IPaginatedItemProvider
-) : ViewModel(), IMainViewModel {
+) : ViewModel(), IStoreFrontViewModel {
     override val items = itemProvider.createItemPagerFlow().cachedIn(viewModelScope)
     override val selectedItem: MutableStateFlow<Int?> = MutableStateFlow(null)
 
