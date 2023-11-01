@@ -22,13 +22,17 @@ import dev.catsuperberg.e_commerce_exercise.client.domain.service.IItemMessageCo
 import dev.catsuperberg.e_commerce_exercise.client.domain.service.IUriImageAccess
 import dev.catsuperberg.e_commerce_exercise.client.domain.service.ItemMessageComposer
 import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.IItemDetailsSender
+import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.IItemUpdater
 import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.IOrderRegistration
 import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.IPaginatedItemProvider
 import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.ItemDetailsSender
+import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.ItemUpdater
 import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.OrderRegistration
 import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.PaginatedItemProvider
 import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.auth.AuthViewModel
 import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.auth.IAuthViewModel
+import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.item.edit.IItemEditViewModel
+import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.item.edit.ItemEditViewModel
 import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.manager.store.front.IManagerStoreFrontViewModel
 import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.manager.store.front.ManagerStoreFrontViewModel
 import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.order.form.IOrderFormViewModel
@@ -85,10 +89,13 @@ class MainApp : Application() {
 
             singleOf(::AccountService) binds(arrayOf(IAccountService::class, IAuthState::class))
 
+            factoryOf(::ItemUpdater) bind IItemUpdater::class
+
             factory { StoreFrontViewModel(get(), get(), get()) } bind IStoreFrontViewModel::class
             factory { ManagerStoreFrontViewModel(get(), get(), get()) } bind IManagerStoreFrontViewModel::class
             factory { AuthViewModel(get(), get()) } bind IAuthViewModel::class
             factory { OrderFormViewModel(get(), get(), get()) } bind IOrderFormViewModel::class
+            factory { ItemEditViewModel(get(), get(), get()) } bind IItemEditViewModel::class
         }
 
         startKoin {
