@@ -18,7 +18,5 @@ interface IStoreFrontViewModel {
     data class NavCallbacks(
         val onBuyItem: (item: Item) -> Unit,
         val onAuth: () -> Unit,
-        val onOrders: () -> Unit,
-        val onEditItem: (item: Item) -> Unit
     )
 }

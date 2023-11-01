@@ -7,9 +7,12 @@
     <string name="item_details_reminder">"Вы приобретаете: %1$s \nАрт.: %2$s\nСтоимость: %3$s"</string>
     <string name="fill_contact_details">Пожалуйста заполните контактные данные для оформления заказа</string>
     <string name="store_name">Boo-tique</string>
-    <string name="authentication">Authentication</string>
+    <string name="authentication">Авторизация менеджера</string>
     <string name="password">пароль</string>
     <string name="sign_in">Войти</string>
     <string name="user_sign_up">Регистрация нового менеджера</string>
     <string name="sign_up">Создать</string>
+    <string name="sign_out">Выйти из аккаунта</string>
+    <string name="orders">Заказы</string>
+    <string name="manager_store_front">Витрина товаров</string>
 </resources>

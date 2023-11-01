@@ -13,7 +13,7 @@ class StoreFrontViewModel(
     private val detailsSender: IItemDetailsSender,
     itemProvider: IPaginatedItemProvider
 ) : ViewModel(), IStoreFrontViewModel {
-    override val items = itemProvider.createItemPagerFlow().cachedIn(viewModelScope)
+    override val items = itemProvider.createAvailableItemPagerFlow().cachedIn(viewModelScope)
     override val selectedItem: MutableStateFlow<Int?> = MutableStateFlow(null)
 
     override fun onAuthScreen() {

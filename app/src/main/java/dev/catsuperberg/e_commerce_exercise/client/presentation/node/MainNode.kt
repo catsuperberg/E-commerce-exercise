@@ -12,19 +12,16 @@ import com.bumble.appyx.navmodel.backstack.BackStack
 import com.bumble.appyx.navmodel.backstack.operation.pop
 import com.bumble.appyx.navmodel.backstack.operation.push
 import com.bumble.appyx.navmodel.backstack.operation.singleTop
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import dev.catsuperberg.e_commerce_exercise.client.domain.model.Item
 import dev.catsuperberg.e_commerce_exercise.client.domain.service.IAuthState
 import dev.catsuperberg.e_commerce_exercise.client.presentation.ui.AuthScreen
 import dev.catsuperberg.e_commerce_exercise.client.presentation.ui.ManagerStoreFrontScreen
-import dev.catsuperberg.e_commerce_exercise.client.presentation.ui.StoreFrontScreen
 import dev.catsuperberg.e_commerce_exercise.client.presentation.ui.OrderFormScreen
+import dev.catsuperberg.e_commerce_exercise.client.presentation.ui.StoreFrontScreen
 import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.auth.IAuthViewModel
-import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.store.front.IStoreFrontViewModel
+import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.manager.store.front.IManagerStoreFrontViewModel
 import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.order.form.IOrderFormViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.coroutineScope
+import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.store.front.IStoreFrontViewModel
 import kotlinx.parcelize.Parcelize
 import org.koin.core.component.KoinScopeComponent
 import org.koin.core.component.createScope
@@ -66,18 +63,20 @@ class MainNode(
         when (navTarget) {
             is NavTarget.StoreFrontScreen -> screenNode(buildContext) {
                 val signedIn = authState.signedIn.collectAsState()
-                val callbacks = IStoreFrontViewModel.NavCallbacks(
-                    onBuyItem = { item -> backStack.push(NavTarget.OrderFormScreen(item)) },
-                    onAuth = { backStack.push(NavTarget.AuthScreen) },
-                    onOrders = {},
-                    onEditItem = {}
-                )
-                println("authState: " + signedIn.value)
-                println("Firebase.auth.currentUser: " + Firebase.auth.currentUser)
-                if(signedIn.value)
-                    ManagerStoreFrontScreen()
-                else
+                if(signedIn.value) {
+                    val callbacks = IManagerStoreFrontViewModel.NavCallbacks(
+                        onOrdersScreen = {},
+                        onEditItem = {},
+                    )
+                    ManagerStoreFrontScreen(get { parametersOf(callbacks) })
+                }
+                else {
+                    val callbacks = IStoreFrontViewModel.NavCallbacks(
+                        onBuyItem = { item -> backStack.push(NavTarget.OrderFormScreen(item)) },
+                        onAuth = { backStack.push(NavTarget.AuthScreen) }
+                    )
                     StoreFrontScreen(get { parametersOf(callbacks) })
+                }
             }
             is NavTarget.OrderFormScreen -> screenNode(buildContext) {
                 val callbacks = IOrderFormViewModel.NavCallbacks(
