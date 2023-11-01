@@ -12,8 +12,10 @@ import com.bumble.appyx.navmodel.backstack.operation.pop
 import com.bumble.appyx.navmodel.backstack.operation.push
 import com.bumble.appyx.navmodel.backstack.operation.singleTop
 import dev.catsuperberg.e_commerce_exercise.client.domain.model.Item
+import dev.catsuperberg.e_commerce_exercise.client.presentation.ui.AuthScreen
 import dev.catsuperberg.e_commerce_exercise.client.presentation.ui.MainScreen
 import dev.catsuperberg.e_commerce_exercise.client.presentation.ui.OrderFormScreen
+import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.auth.IAuthViewModel
 import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.main.IMainViewModel
 import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.order.form.IOrderFormViewModel
 import kotlinx.parcelize.Parcelize
@@ -70,13 +72,14 @@ class MainNode(
                 OrderFormScreen(get { parametersOf(callbacks, navTarget.item) })
             }
             is NavTarget.AuthScreen -> screenNode(buildContext) {
-                screenNode(buildContext) { MainScreen(get()) }
+                val callbacks = IAuthViewModel.NavCallbacks( onSuccess = { backStack.pop() } )
+                AuthScreen(get { parametersOf(callbacks) })
             }
             is NavTarget.OrdersScreen -> screenNode(buildContext) {
-                screenNode(buildContext) { MainScreen(get()) }
+                MainScreen(get())
             }
             is NavTarget.ItemEditScreen -> screenNode(buildContext) {
-                screenNode(buildContext) { MainScreen(get()) }
+                MainScreen(get())
             }
         }
 

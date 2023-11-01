@@ -14,7 +14,10 @@ import dev.catsuperberg.e_commerce_exercise.client.data.repository.order.IOrderE
 import dev.catsuperberg.e_commerce_exercise.client.data.repository.order.IOrderMapper
 import dev.catsuperberg.e_commerce_exercise.client.data.repository.order.OrderEndPoint
 import dev.catsuperberg.e_commerce_exercise.client.data.repository.order.OrderMapper
+import dev.catsuperberg.e_commerce_exercise.client.domain.service.AccountService
 import dev.catsuperberg.e_commerce_exercise.client.domain.service.ClearCacheUriImageAccess
+import dev.catsuperberg.e_commerce_exercise.client.domain.service.IAccountService
+import dev.catsuperberg.e_commerce_exercise.client.domain.service.IAuthState
 import dev.catsuperberg.e_commerce_exercise.client.domain.service.IItemMessageComposer
 import dev.catsuperberg.e_commerce_exercise.client.domain.service.IUriImageAccess
 import dev.catsuperberg.e_commerce_exercise.client.domain.service.ItemMessageComposer
@@ -24,6 +27,8 @@ import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.IPaginatedItem
 import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.ItemDetailsSender
 import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.OrderRegistration
 import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.PaginatedItemProvider
+import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.auth.AuthViewModel
+import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.auth.IAuthViewModel
 import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.main.IMainViewModel
 import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.main.MainViewModel
 import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.order.form.IOrderFormViewModel
@@ -32,8 +37,10 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import org.koin.core.module.dsl.factoryOf
+import org.koin.core.module.dsl.singleOf
 import org.koin.core.parameter.parametersOf
 import org.koin.dsl.bind
+import org.koin.dsl.binds
 import org.koin.dsl.module
 
 class MainApp : Application() {
@@ -70,13 +77,15 @@ class MainApp : Application() {
             factoryOf(::ItemMessageComposer) bind IItemMessageComposer::class
             factoryOf(::ItemDetailsSender) bind IItemDetailsSender::class
 
-
             factoryOf(::OrderMapper) bind IOrderMapper::class
             factoryOf(::OrderEndPoint) bind IOrderEndPoint::class
             factoryOf(::OrderRegistration) bind IOrderRegistration::class
 
-            factory { OrderFormViewModel(get(), get(), get()) } bind IOrderFormViewModel::class
+            singleOf(::AccountService) binds(arrayOf(IAccountService::class, IAuthState::class))
+
             factory { MainViewModel(get(), get(), get()) } bind IMainViewModel::class
+            factory { AuthViewModel(get(), get()) } bind IAuthViewModel::class
+            factory { OrderFormViewModel(get(), get(), get()) } bind IOrderFormViewModel::class
         }
 
         startKoin {

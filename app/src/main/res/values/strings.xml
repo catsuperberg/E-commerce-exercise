@@ -8,4 +8,8 @@
     <string name="fill_contact_details">Пожалуйста заполните контактные данные для оформления заказа</string>
     <string name="store_name">Boo-tique</string>
     <string name="authentication">Authentication</string>
+    <string name="password">пароль</string>
+    <string name="sign_in">Войти</string>
+    <string name="user_sign_up">Регистрация нового менеджера</string>
+    <string name="sign_up">Создать</string>
 </resources>
