@@ -26,4 +26,7 @@
     <string name="item_description">краткое описание товара</string>
     <string name="item_id_display">арт.: %1$s</string>
     <string name="auto_generation">будет присвоен автоматически</string>
+    <string name="order_processing_fail">заказ не был обработан</string>
+    <string name="no_image_selected">изображение не выбрано</string>
+    <string name="new_item_image">изображение нового товара</string>
 </resources>

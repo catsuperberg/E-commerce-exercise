@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
@@ -17,12 +18,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import dev.catsuperberg.e_commerce_exercise.client.R
 import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.item.edit.IItemEditViewModel
 
@@ -54,6 +58,22 @@ fun ItemEditScreen(viewModel: IItemEditViewModel) {
 
 @Composable
 private fun Image(viewModel: IItemEditViewModel) {
+    val initialUrl = viewModel.initialPictureUrl
+    val pickedUri = viewModel.pictureUri.collectAsState()
+
+    val imageModel = pickedUri.value ?: initialUrl
+    AsyncImage(
+        model = imageModel,
+        placeholder = painterResource(R.drawable.ic_item_placeholder_background),
+        fallback = painterResource(R.drawable.ic_item_placeholder_background),
+        contentDescription = stringResource(
+            R.string.picture_content_description,
+            stringResource(R.string.new_item_image)
+        ),
+        modifier = Modifier
+            .padding(end = 12.dp)
+            .clip(RoundedCornerShape(10.dp)),
+    )
     Button(onClick = viewModel::onPickImage) {
         Text(text = "Pick image")
     }

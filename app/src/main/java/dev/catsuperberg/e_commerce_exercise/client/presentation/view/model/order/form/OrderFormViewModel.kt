@@ -67,7 +67,7 @@ class OrderFormViewModel(
         if(result.isSuccess)
             navCallbacks.onOrderOpened()
         else
-            Log.d("E", "Order wasn't processed")
+            Log.d("E", "заказ не был обработан")
     }
 
     private fun contactDetailsInvalid() =

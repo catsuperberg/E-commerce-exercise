@@ -21,10 +21,13 @@ import dev.catsuperberg.e_commerce_exercise.client.domain.service.IAuthState
 import dev.catsuperberg.e_commerce_exercise.client.domain.service.IItemMessageComposer
 import dev.catsuperberg.e_commerce_exercise.client.domain.service.IUriImageAccess
 import dev.catsuperberg.e_commerce_exercise.client.domain.service.ItemMessageComposer
+import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.IImagePicker
 import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.IItemDetailsSender
 import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.IItemUpdater
+import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.IMediaRequestHoisting
 import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.IOrderRegistration
 import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.IPaginatedItemProvider
+import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.ImagePicker
 import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.ItemDetailsSender
 import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.ItemUpdater
 import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.OrderRegistration
@@ -88,14 +91,14 @@ class MainApp : Application() {
             factoryOf(::OrderRegistration) bind IOrderRegistration::class
 
             singleOf(::AccountService) binds(arrayOf(IAccountService::class, IAuthState::class))
-
+            singleOf(::ImagePicker) binds(arrayOf(IMediaRequestHoisting::class, IImagePicker::class))
             factoryOf(::ItemUpdater) bind IItemUpdater::class
 
             factory { StoreFrontViewModel(get(), get(), get()) } bind IStoreFrontViewModel::class
             factory { ManagerStoreFrontViewModel(get(), get(), get()) } bind IManagerStoreFrontViewModel::class
             factory { AuthViewModel(get(), get()) } bind IAuthViewModel::class
             factory { OrderFormViewModel(get(), get(), get()) } bind IOrderFormViewModel::class
-            factory { ItemEditViewModel(get(), get(), get()) } bind IItemEditViewModel::class
+            factory { ItemEditViewModel(get(), get(), get() ,get()) } bind IItemEditViewModel::class
         }
 
         startKoin {
