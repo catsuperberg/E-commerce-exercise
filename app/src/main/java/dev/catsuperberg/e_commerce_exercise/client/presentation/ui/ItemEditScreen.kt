@@ -1,27 +1,35 @@
 package dev.catsuperberg.e_commerce_exercise.client.presentation.ui
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Photo
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -38,7 +46,7 @@ fun ItemEditScreen(viewModel: IItemEditViewModel) {
             .padding(vertical = 48.dp, horizontal = 32.dp),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        Image(viewModel)
+        Image(viewModel, Modifier.weight(0.45f))
         ItemDetailInputs(viewModel, modifier = Modifier.weight(1f))
 
         Button(
@@ -57,25 +65,38 @@ fun ItemEditScreen(viewModel: IItemEditViewModel) {
 }
 
 @Composable
-private fun Image(viewModel: IItemEditViewModel) {
-    val initialUrl = viewModel.initialPictureUrl
+private fun Image(viewModel: IItemEditViewModel, modifier: Modifier) {
     val pickedUri = viewModel.pictureUri.collectAsState()
 
-    val imageModel = pickedUri.value ?: initialUrl
-    AsyncImage(
-        model = imageModel,
-        placeholder = painterResource(R.drawable.ic_item_placeholder_background),
-        fallback = painterResource(R.drawable.ic_item_placeholder_background),
-        contentDescription = stringResource(
-            R.string.picture_content_description,
-            stringResource(R.string.new_item_image)
-        ),
-        modifier = Modifier
-            .padding(end = 12.dp)
-            .clip(RoundedCornerShape(10.dp)),
-    )
-    Button(onClick = viewModel::onPickImage) {
-        Text(text = "Pick image")
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = modifier.fillMaxWidth()
+    ) {
+        AsyncImage(
+            model = pickedUri.value,
+            contentDescription = stringResource(
+                R.string.picture_content_description,
+                stringResource(R.string.new_item_image)
+            ),
+            modifier = Modifier
+                .fillMaxHeight()
+                .clip(RoundedCornerShape(10.dp)),
+        )
+        Button(
+            onClick = viewModel::onPickImage,
+            shape = CircleShape,
+            contentPadding = PaddingValues(0.dp),
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .size(48.dp)
+                .aspectRatio(1f)
+        ) {
+            Icon(
+                imageVector = Icons.Filled.Photo,
+                contentDescription = stringResource(R.string.pick_image),
+                modifier = Modifier.size(32.dp)
+            )
+        }
     }
 }
 
