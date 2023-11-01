@@ -31,6 +31,8 @@ import androidx.paging.compose.itemContentType
 import androidx.paging.compose.itemKey
 import dev.catsuperberg.e_commerce_exercise.client.R
 import dev.catsuperberg.e_commerce_exercise.client.presentation.ui.common.ProgressIndicator
+import dev.catsuperberg.e_commerce_exercise.client.presentation.ui.components.FullItemCard
+import dev.catsuperberg.e_commerce_exercise.client.presentation.ui.components.ItemCard
 import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.store.front.IStoreFrontViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)

@@ -15,4 +15,8 @@
     <string name="sign_out">Выйти из аккаунта</string>
     <string name="orders">Заказы</string>
     <string name="manager_store_front">Витрина товаров</string>
+    <string name="price">Стоимость: %1$s</string>
+    <string name="id">Арт.: %1$s</string>
+    <string name="unavailable">Товар недоступен</string>
+    <string name="picture_content_description">Picture of: %1$s</string>
 </resources>

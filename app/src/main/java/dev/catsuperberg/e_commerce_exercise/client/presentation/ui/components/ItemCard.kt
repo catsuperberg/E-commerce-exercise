@@ -1,4 +1,4 @@
-package dev.catsuperberg.e_commerce_exercise.client.presentation.ui
+package dev.catsuperberg.e_commerce_exercise.client.presentation.ui.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -51,7 +52,7 @@ fun ItemCard(item: Item, index: Int, viewModel: IStoreFrontViewModel) {
                 model = item.pathDownload,
                 placeholder = painterResource(R.drawable.ic_item_placeholder_background),
                 fallback = painterResource(R.drawable.ic_item_placeholder_background),
-                contentDescription = "Item picture",
+                contentDescription = stringResource(R.string.picture_content_description, item.name),
                 modifier = Modifier
                     .fillMaxHeight()
                     .padding(end = 12.dp)

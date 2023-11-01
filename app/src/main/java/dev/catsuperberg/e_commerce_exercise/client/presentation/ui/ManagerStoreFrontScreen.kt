@@ -31,6 +31,7 @@ import androidx.paging.compose.itemContentType
 import androidx.paging.compose.itemKey
 import dev.catsuperberg.e_commerce_exercise.client.R
 import dev.catsuperberg.e_commerce_exercise.client.presentation.ui.common.ProgressIndicator
+import dev.catsuperberg.e_commerce_exercise.client.presentation.ui.components.ManagerItemCard
 import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.manager.store.front.IManagerStoreFrontViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -94,9 +95,7 @@ fun ManagerStoreFrontScreen(viewModel: IManagerStoreFrontViewModel) {
                     contentType = pagingItems.itemContentType()
                 ) { index ->
                     val item = pagingItems[index]
-                    item?.also {
-                        Text(it.id)
-                    }
+                    item?.also { ManagerItemCard(item = it, onEdit = viewModel::onEditItem) }
                 }
             }
 

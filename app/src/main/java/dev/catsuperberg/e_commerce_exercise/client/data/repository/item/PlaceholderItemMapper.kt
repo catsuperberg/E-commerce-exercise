@@ -15,7 +15,7 @@ class PlaceholderItemMapper : IItemMapper {
             name = document.getString(ItemSchema.name) ?: randomString(12),
             description = document.getString(ItemSchema.description),
             price = document.getDouble(ItemSchema.price)?.toFloat() ?: random.nextFloat(),
-            available = document.getBoolean(ItemSchema.available) ?: true,
+            available = document.getBoolean(ItemSchema.available) ?: false,
             pathGS = document.getString(ItemSchema.pathGS),
             pathDownload = document.getString(ItemSchema.pathDownload),
         )
