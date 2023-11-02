@@ -1,12 +1,10 @@
 package dev.catsuperberg.e_commerce_exercise.client.domain.service
 
+import android.content.Context
+import dev.catsuperberg.e_commerce_exercise.client.R
 import dev.catsuperberg.e_commerce_exercise.client.domain.model.Item
 
-class ItemMessageComposer : IItemMessageComposer {
-    override fun composeShareDetails(item: Item): String {
-        return """
-            Эй, посмотри на это нечто которое я нашёл в новом магазине привидений.
-            Это ${item.name} и стоит всего ${item.price} забытых завтраков.
-        """.trimIndent()
-    }
+class ItemMessageComposer(private val context: Context) : IItemMessageComposer {
+    override fun composeShareDetails(item: Item): String =
+        context.getString(R.string.composed_message, item.name, String.format("%.2f", item.price))
 }
