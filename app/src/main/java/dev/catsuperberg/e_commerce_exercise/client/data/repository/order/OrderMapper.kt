@@ -17,27 +17,24 @@ class OrderMapper : IOrderMapper {
         )
 
     override fun map(document: QueryDocumentSnapshot): Order? {
-        if (!document.isOrder())
-            return null
+        val customerName = document.getString(OrderSchema.customerName) ?: return null
+        val customerPhone = document.getString(OrderSchema.customerPhone) ?: return null
+        val customerEmail = document.getString(OrderSchema.customerEmail) ?: return null
+        val itemId = document.getString(OrderSchema.itemId) ?: return null
+        val sum = document.getDouble(OrderSchema.sum) ?: return null
+        val created = document.getTimestamp(OrderSchema.created) ?: return null
+        val fulfilled = document.getBoolean(OrderSchema.fulfilled) ?: return null
+        val canceled = document.getBoolean(OrderSchema.canceled) ?: return null
         return Order(
             id = document.id,
-            customerName = document.getString(OrderSchema.customerName)!!,
-            customerPhone = document.getString(OrderSchema.customerPhone)!!,
-            customerEmail = document.getString(OrderSchema.customerEmail)!!,
-            itemId = document.getString(OrderSchema.itemId)!!,
-            sum = document.getDouble(OrderSchema.sum)!!.toFloat(),
-            created = document.getTimestamp(OrderSchema.created)!!,
-            fulfilled = document.getBoolean(OrderSchema.fulfilled)!!,
-            canceled = document.getBoolean(OrderSchema.canceled)!!
+            customerName = customerName,
+            customerPhone = customerPhone,
+            customerEmail = customerEmail,
+            itemId = itemId,
+            sum = sum.toFloat(),
+            created = created,
+            fulfilled = fulfilled,
+            canceled = canceled
         )
     }
-
-    private fun QueryDocumentSnapshot.isOrder(): Boolean = getString(OrderSchema.customerName) != null &&
-            getString(OrderSchema.customerPhone) != null &&
-            getString(OrderSchema.customerEmail) != null &&
-            getString(OrderSchema.itemId) != null &&
-            getDouble(OrderSchema.sum) != null &&
-            getTimestamp(OrderSchema.created) != null &&
-            getBoolean(OrderSchema.fulfilled) != null &&
-            getBoolean(OrderSchema.canceled) != null
 }

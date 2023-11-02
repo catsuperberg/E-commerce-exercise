@@ -6,14 +6,15 @@ import dev.catsuperberg.e_commerce_exercise.client.domain.model.NewItem
 
 class IgnoreInvalidItemMapper : IItemMapper {
     override fun map(document: QueryDocumentSnapshot): Item? {
-        if (!document.isItem())
-            return null
+        val name = document.getString(ItemSchema.name) ?: return null
+        val price = document.getDouble(ItemSchema.price) ?: return null
+        val available = document.getBoolean(ItemSchema.available) ?: return null
         return Item(
             id = document.id,
-            name = document.getString(ItemSchema.name)!!,
+            name = name,
             description = document.getString(ItemSchema.description),
-            price = document.getDouble(ItemSchema.price)!!.toFloat(),
-            available = document.getBoolean(ItemSchema.available)!!,
+            price = price.toFloat(),
+            available = available,
             pathGs = document.getString(ItemSchema.pathGs),
             pathDownload = document.getString(ItemSchema.pathDownload),
         )
@@ -29,8 +30,4 @@ class IgnoreInvalidItemMapper : IItemMapper {
         ItemSchema.pathGs to (item.pathGs ?: ""),
         ItemSchema.pathDownload to (item.pathDownload ?: "")
     )
-
-    private fun QueryDocumentSnapshot.isItem(): Boolean = getString(ItemSchema.name) != null &&
-            getDouble(ItemSchema.price) != null &&
-            getBoolean(ItemSchema.available) != null
 }
