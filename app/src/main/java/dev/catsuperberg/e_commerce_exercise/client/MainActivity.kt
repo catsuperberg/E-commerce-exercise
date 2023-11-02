@@ -11,7 +11,7 @@ import dev.catsuperberg.e_commerce_exercise.client.domain.exception.AppException
 import dev.catsuperberg.e_commerce_exercise.client.domain.service.IAuthState
 import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.IMediaRequestHoisting
 import dev.catsuperberg.e_commerce_exercise.client.presentation.node.MainNode
-import dev.catsuperberg.e_commerce_exercise.client.presentation.ui.theme.EcommerceExerciseTheme
+import dev.catsuperberg.e_commerce_exercise.client.presentation.ui.theme.HalloweenTheme
 import org.koin.android.ext.android.inject
 
 class MainActivity : NodeActivity() {
@@ -23,7 +23,7 @@ class MainActivity : NodeActivity() {
         hookUpImagePicker()
 
         setContent {
-            EcommerceExerciseTheme {
+            HalloweenTheme {
                 Surface(tonalElevation = 0.2.dp) {
                     NodeHost(integrationPoint = appyxIntegrationPoint) {
                         MainNode(buildContext = it, authState)
