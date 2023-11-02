@@ -17,6 +17,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -41,54 +42,7 @@ fun ManagerStoreFrontScreen(viewModel: IManagerStoreFrontViewModel) {
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
-            TopAppBar(
-                colors = TopAppBarDefaults.mediumTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.tertiaryContainer,
-                    navigationIconContentColor = MaterialTheme.colorScheme.tertiary,
-                    actionIconContentColor = MaterialTheme.colorScheme.tertiary,
-                    titleContentColor = MaterialTheme.colorScheme.tertiary
-                ),
-                title = {
-                    Text(
-                        text = stringResource(R.string.manager_store_front).uppercase(),
-                        style = MaterialTheme.typography.titleMedium,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                },
-                navigationIcon = {
-                    Icon(
-                        painter = painterResource(R.drawable.ic_store_logo),
-                        contentDescription = null,
-                        modifier = Modifier.size(32.dp)
-                    )
-                },
-                actions = {
-                    IconButton(onClick = viewModel::onEditItem) {
-                        Icon(
-                            imageVector = Icons.Filled.Add,
-                            contentDescription = stringResource(R.string.create_item),
-                            modifier = Modifier.size(32.dp)
-                        )
-                    }
-                    IconButton(onClick = viewModel::onOrdersScreen) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.Assignment,
-                            contentDescription = stringResource(R.string.orders),
-                            modifier = Modifier.size(32.dp)
-                        )
-                    }
-                    IconButton(onClick = viewModel::onSignOut) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ExitToApp,
-                            contentDescription = stringResource(R.string.sign_out),
-                            modifier = Modifier.size(32.dp)
-                        )
-                    }
-                },
-                scrollBehavior = scrollBehavior,
-                windowInsets = WindowInsets(left = 8.dp, right = 8.dp, top = 4.dp, bottom = 4.dp),
-            )
+            ManagerAppBar(scrollBehavior, viewModel::onEditItem, viewModel::onOrdersScreen, viewModel::onSignOut)
         }
     ) { innerPadding ->
         val pagingItems = viewModel.items.collectAsLazyPagingItems()
@@ -115,4 +69,62 @@ fun ManagerStoreFrontScreen(viewModel: IManagerStoreFrontViewModel) {
             }
         }
     }
+}
+
+@Composable
+@OptIn(ExperimentalMaterial3Api::class)
+private fun ManagerAppBar(
+    scrollBehavior: TopAppBarScrollBehavior,
+    onEditItem: () -> Unit,
+    onOrdersScreen: () -> Unit,
+    onSignOut: () -> Unit,
+) {
+    TopAppBar(
+        colors = TopAppBarDefaults.mediumTopAppBarColors(
+            containerColor = MaterialTheme.colorScheme.onSurfaceVariant,
+            navigationIconContentColor = MaterialTheme.colorScheme.surfaceVariant,
+            actionIconContentColor = MaterialTheme.colorScheme.surfaceVariant,
+            titleContentColor = MaterialTheme.colorScheme.surfaceVariant
+        ),
+        title = {
+            Text(
+                text = stringResource(R.string.manager_store_front).uppercase(),
+                style = MaterialTheme.typography.titleMedium,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+        },
+        navigationIcon = {
+            Icon(
+                painter = painterResource(R.drawable.ic_store_logo),
+                contentDescription = null,
+                modifier = Modifier.size(32.dp)
+            )
+        },
+        actions = {
+            IconButton(onClick = onEditItem) {
+                Icon(
+                    imageVector = Icons.Filled.Add,
+                    contentDescription = stringResource(R.string.create_item),
+                    modifier = Modifier.size(32.dp)
+                )
+            }
+            IconButton(onClick = onOrdersScreen) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.Assignment,
+                    contentDescription = stringResource(R.string.orders),
+                    modifier = Modifier.size(32.dp)
+                )
+            }
+            IconButton(onClick = onSignOut) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ExitToApp,
+                    contentDescription = stringResource(R.string.sign_out),
+                    modifier = Modifier.size(32.dp)
+                )
+            }
+        },
+        scrollBehavior = scrollBehavior,
+        windowInsets = WindowInsets(left = 8.dp, right = 8.dp, top = 4.dp, bottom = 4.dp),
+    )
 }

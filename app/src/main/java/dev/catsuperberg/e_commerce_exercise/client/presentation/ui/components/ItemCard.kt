@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import dev.catsuperberg.e_commerce_exercise.client.R
 import dev.catsuperberg.e_commerce_exercise.client.domain.model.Item
+import dev.catsuperberg.e_commerce_exercise.client.presentation.ui.theme.extendedColors
 import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.store.front.IStoreFrontViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -38,8 +39,8 @@ fun ItemCard(item: Item, index: Int, placeholderPainter: Painter, viewModel: ISt
         onClick = { viewModel.onCardClick(index) },
         shape = MaterialTheme.shapes.large,
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant,
-            contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+            containerColor = MaterialTheme.colorScheme.outlineVariant,
+            contentColor = MaterialTheme.extendedColors.blueHarmonized,
         ),
         modifier = Modifier
             .fillMaxWidth()
@@ -77,7 +78,7 @@ fun ItemCard(item: Item, index: Int, placeholderPainter: Painter, viewModel: ISt
 
                 Surface(
                     shape = MaterialTheme.shapes.large,
-                    color = MaterialTheme.colorScheme.tertiary,
+                    color = MaterialTheme.extendedColors.yellowHarmonizedContainer,
                     modifier = Modifier.widthIn(min = 64.dp, max = 96.dp),
                 ) {
                     Text(

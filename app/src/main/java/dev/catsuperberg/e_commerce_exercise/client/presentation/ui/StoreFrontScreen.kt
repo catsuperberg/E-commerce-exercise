@@ -106,9 +106,9 @@ private fun StoreFrontAppBar(
     MediumTopAppBar(
         colors = TopAppBarDefaults.mediumTopAppBarColors(
             containerColor = MaterialTheme.colorScheme.onSurfaceVariant,
-            navigationIconContentColor = MaterialTheme.colorScheme.onSecondary,
-            actionIconContentColor = MaterialTheme.colorScheme.onSecondary,
-            titleContentColor = MaterialTheme.colorScheme.onSecondary
+            navigationIconContentColor = MaterialTheme.colorScheme.surfaceVariant,
+            actionIconContentColor = MaterialTheme.colorScheme.surfaceVariant,
+            titleContentColor = MaterialTheme.colorScheme.surfaceVariant
         ),
         title = {
             Text(

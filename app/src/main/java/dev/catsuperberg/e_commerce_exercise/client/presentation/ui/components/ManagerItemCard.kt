@@ -31,11 +31,11 @@ import dev.catsuperberg.e_commerce_exercise.client.domain.model.Item
 @Composable
 fun ManagerItemCard(item: Item, onEdit: (Item) -> Unit) {
     val cardColors = if (item.available) CardDefaults.cardColors(
-        containerColor = MaterialTheme.colorScheme.surfaceVariant,
+        containerColor = MaterialTheme.colorScheme.outlineVariant,
         contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
     ) else CardDefaults.cardColors(
-        containerColor = MaterialTheme.colorScheme.secondaryContainer,
-        contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+        containerColor = MaterialTheme.colorScheme.outline,
+        contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
     )
     Card(
         shape = MaterialTheme.shapes.large,

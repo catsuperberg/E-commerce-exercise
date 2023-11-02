@@ -16,6 +16,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -26,6 +27,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
@@ -34,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import dev.catsuperberg.e_commerce_exercise.client.R
 import dev.catsuperberg.e_commerce_exercise.client.domain.model.Item
+import dev.catsuperberg.e_commerce_exercise.client.presentation.ui.theme.extendedColors
 import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.store.front.IStoreFrontViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -43,8 +46,8 @@ fun FullItemCard(item: Item, index: Int, placeholderPainter: Painter, viewModel:
         onClick = { viewModel.onCardClick(index) },
         shape = MaterialTheme.shapes.large,
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant,
-            contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+            containerColor = MaterialTheme.colorScheme.outlineVariant,
+            contentColor = MaterialTheme.extendedColors.blueHarmonized,
         ),
         modifier = Modifier
             .fillMaxWidth()
@@ -85,6 +88,10 @@ private fun Buttons(
             Button(
                 onClick = { onShare(item) },
                 shape = CircleShape,
+//                colors = ButtonDefaults.buttonColors(
+//                    containerColor = MaterialTheme.extendedColors.onRedContainer,
+//                    contentColor = MaterialTheme.extendedColors.redContainer
+//                ),
                 contentPadding = PaddingValues(0.dp),
                 modifier = Modifier
                     .aspectRatio(1f, true)
@@ -98,6 +105,10 @@ private fun Buttons(
         Button(
             onClick = { onBuy(item) },
             shape = MaterialTheme.shapes.large,
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.extendedColors.yellowHarmonizedContainer,
+                contentColor = MaterialTheme.extendedColors.blueHarmonized
+            ),
             modifier = Modifier
                 .fillMaxHeight()
                 .weight(0.65f),
@@ -146,7 +157,7 @@ private fun ItemDetails(item: Item) {
                     textAlign = TextAlign.Right,
                     modifier = Modifier.fillMaxWidth()
                 )
-                HorizontalDivider()
+                HorizontalDivider(color = Color.Black)
             }
         }
 

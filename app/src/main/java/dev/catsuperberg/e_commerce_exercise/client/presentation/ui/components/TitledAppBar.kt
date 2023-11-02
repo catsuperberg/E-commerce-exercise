@@ -26,10 +26,10 @@ fun TitledAppBar(
 ) {
     TopAppBar(
         colors = TopAppBarDefaults.mediumTopAppBarColors(
-            containerColor = MaterialTheme.colorScheme.tertiaryContainer,
-            navigationIconContentColor = MaterialTheme.colorScheme.tertiary,
-            actionIconContentColor = MaterialTheme.colorScheme.tertiary,
-            titleContentColor = MaterialTheme.colorScheme.tertiary
+            containerColor = MaterialTheme.colorScheme.onSurfaceVariant,
+            navigationIconContentColor = MaterialTheme.colorScheme.surfaceVariant,
+            actionIconContentColor = MaterialTheme.colorScheme.surfaceVariant,
+            titleContentColor = MaterialTheme.colorScheme.surfaceVariant
         ),
         title = {
             Text(

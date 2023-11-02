@@ -24,7 +24,7 @@ class MainActivity : NodeActivity() {
 
         setContent {
             HalloweenTheme {
-                Surface(tonalElevation = 0.2.dp) {
+                Surface(tonalElevation = 0.5.dp) {
                     NodeHost(integrationPoint = appyxIntegrationPoint) {
                         MainNode(buildContext = it, authState)
                     }

@@ -25,17 +25,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import dev.catsuperberg.e_commerce_exercise.client.R
 import dev.catsuperberg.e_commerce_exercise.client.domain.model.Order
+import dev.catsuperberg.e_commerce_exercise.client.presentation.ui.theme.extendedColors
 
 @Composable
 fun OrderCard(order: Order, onFulfill: (Order) -> Unit, onCancel: (Order) -> Unit) {
     val cardColors = if (order.canceled) CardDefaults.cardColors(
-        containerColor = MaterialTheme.colorScheme.secondaryContainer,
-        contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+        containerColor = MaterialTheme.colorScheme.outline,
+        contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
     ) else if(order.fulfilled) CardDefaults.cardColors(
-        containerColor = MaterialTheme.colorScheme.primaryContainer,
-        contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+        containerColor = MaterialTheme.extendedColors.green,
+        contentColor = MaterialTheme.extendedColors.onGreenContainer,
     ) else CardDefaults.cardColors(
-        containerColor = MaterialTheme.colorScheme.surfaceVariant,
+        containerColor = MaterialTheme.colorScheme.outlineVariant,
         contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
     )
     val showButtons = (order.canceled || order.fulfilled).not()
