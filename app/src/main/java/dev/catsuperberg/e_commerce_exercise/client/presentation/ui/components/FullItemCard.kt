@@ -47,7 +47,7 @@ fun FullItemCard(item: Item, index: Int, placeholderPainter: Painter, viewModel:
         shape = MaterialTheme.shapes.large,
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.outlineVariant,
-            contentColor = MaterialTheme.extendedColors.blueHarmonized,
+            contentColor = MaterialTheme.extendedColors.blue,
         ),
         modifier = Modifier
             .fillMaxWidth()
@@ -88,10 +88,6 @@ private fun Buttons(
             Button(
                 onClick = { onShare(item) },
                 shape = CircleShape,
-//                colors = ButtonDefaults.buttonColors(
-//                    containerColor = MaterialTheme.extendedColors.onRedContainer,
-//                    contentColor = MaterialTheme.extendedColors.redContainer
-//                ),
                 contentPadding = PaddingValues(0.dp),
                 modifier = Modifier
                     .aspectRatio(1f, true)
@@ -106,8 +102,8 @@ private fun Buttons(
             onClick = { onBuy(item) },
             shape = MaterialTheme.shapes.large,
             colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.extendedColors.yellowHarmonizedContainer,
-                contentColor = MaterialTheme.extendedColors.blueHarmonized
+                containerColor = MaterialTheme.extendedColors.yellowContainer,
+                contentColor = MaterialTheme.extendedColors.blue
             ),
             modifier = Modifier
                 .fillMaxHeight()

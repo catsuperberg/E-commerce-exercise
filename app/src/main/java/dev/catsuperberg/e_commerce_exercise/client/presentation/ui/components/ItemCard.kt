@@ -40,7 +40,7 @@ fun ItemCard(item: Item, index: Int, placeholderPainter: Painter, viewModel: ISt
         shape = MaterialTheme.shapes.large,
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.outlineVariant,
-            contentColor = MaterialTheme.extendedColors.blueHarmonized,
+            contentColor = MaterialTheme.extendedColors.blue,
         ),
         modifier = Modifier
             .fillMaxWidth()
@@ -78,7 +78,7 @@ fun ItemCard(item: Item, index: Int, placeholderPainter: Painter, viewModel: ISt
 
                 Surface(
                     shape = MaterialTheme.shapes.large,
-                    color = MaterialTheme.extendedColors.yellowHarmonizedContainer,
+                    color = MaterialTheme.extendedColors.yellowContainer,
                     modifier = Modifier.widthIn(min = 64.dp, max = 96.dp),
                 ) {
                     Text(
