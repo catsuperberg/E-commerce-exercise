@@ -13,7 +13,7 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 class ItemUpdater(
-    private val uploader: IItemEndPoint,
+    private val endPoint: IItemEndPoint,
     private val imageEmbedding: IItemImageEmbedding,
 ) : IItemUpdater {
     private val scope = CoroutineScope(Dispatchers.IO)
@@ -22,7 +22,7 @@ class ItemUpdater(
         scope.launch {
             imageEmbedding.embed(item, imageUri)
                 .onSuccess { newItem ->
-                    continuation.resume(uploader.upload(newItem))
+                    continuation.resume(endPoint.upload(newItem))
                 }
                 .onFailure { e ->
                     continuation.resume(Result.failure(e))
@@ -33,7 +33,7 @@ class ItemUpdater(
     override suspend fun updateItem(item: Item, imageUri: Uri?): Result<String> = suspendCoroutine { continuation ->
         imageUri?.let {
                 image -> uploadWithNewImage(item, image, continuation)
-        } ?: scope.launch { continuation.resume(uploader.upload(item)) }
+        } ?: scope.launch { continuation.resume(endPoint.upload(item)) }
     }
 
     private fun uploadWithNewImage(
@@ -43,14 +43,12 @@ class ItemUpdater(
     ) = scope.launch {
         imageEmbedding.embed(item, image)
             .onSuccess { newItem ->
-                continuation.resume(uploader.upload(newItem))
+                continuation.resume(endPoint.upload(newItem))
             }
             .onFailure { e ->
                 continuation.resume(Result.failure(e))
             }
     }
 
-    override suspend fun disposeOfItem(id: String): Result<String> {
-        TODO("Not yet implemented")
-    }
+    override suspend fun disposeOfItem(id: String): Result<String> = endPoint.delete(id)
 }

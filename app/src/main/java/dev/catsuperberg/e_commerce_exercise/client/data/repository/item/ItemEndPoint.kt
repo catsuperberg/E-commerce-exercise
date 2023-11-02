@@ -15,8 +15,8 @@ class ItemEndPoint(private val mapper: IItemMapper) : IItemEndPoint {
         return suspendCoroutine { continuation ->
             db.collection(ItemSchema.collectionName).document(item.id)
                 .set(mappedData)
-                .addOnSuccessListener { documentReference ->
-                    continuation.resume(Result.success("documentReference.toString()"))
+                .addOnSuccessListener { _ ->
+                    continuation.resume(Result.success(item.id))
                 }
                 .addOnFailureListener { e ->
                     continuation.resume(Result.failure(e))
@@ -36,5 +36,16 @@ class ItemEndPoint(private val mapper: IItemMapper) : IItemEndPoint {
                     continuation.resume(Result.failure(e))
                 }
         }
+    }
+
+    override suspend fun delete(id: String): Result<String> = suspendCoroutine { continuation ->
+        db.collection(ItemSchema.collectionName).document(id)
+            .delete()
+            .addOnSuccessListener { _ ->
+                continuation.resume(Result.success(id))
+            }
+            .addOnFailureListener { e ->
+                continuation.resume(Result.failure(e))
+            }
     }
 }

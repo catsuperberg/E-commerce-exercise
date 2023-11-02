@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Assignment
 import androidx.compose.material.icons.automirrored.filled.ExitToApp
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -51,7 +52,7 @@ fun ManagerStoreFrontScreen(viewModel: IManagerStoreFrontViewModel) {
                 title = {
                     Text(
                         text = stringResource(R.string.manager_store_front).uppercase(),
-                        style = MaterialTheme.typography.headlineSmall,
+                        style = MaterialTheme.typography.titleMedium,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
@@ -63,6 +64,13 @@ fun ManagerStoreFrontScreen(viewModel: IManagerStoreFrontViewModel) {
                     )
                 },
                 actions = {
+                    IconButton(onClick = viewModel::onEditItem) {
+                        Icon(
+                            imageVector = Icons.Filled.Add,
+                            contentDescription = stringResource(R.string.create_item),
+                            modifier = Modifier.size(32.dp)
+                        )
+                    }
                     IconButton(onClick = viewModel::onOrdersScreen) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.Assignment,

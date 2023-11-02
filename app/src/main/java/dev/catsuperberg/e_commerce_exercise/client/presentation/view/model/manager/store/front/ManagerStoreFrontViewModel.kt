@@ -22,7 +22,7 @@ class ManagerStoreFrontViewModel(
         accountService.signOut()
     }
 
-    override fun onEditItem(item: Item) {
+    override fun onEditItem(item: Item?) {
         navCallbacks.onEditItem(item)
     }
 }

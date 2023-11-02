@@ -104,7 +104,7 @@ class MainApp : Application() {
             factory { ManagerStoreFrontViewModel(get(), get(), get()) } bind IManagerStoreFrontViewModel::class
             factory { AuthViewModel(get(), get()) } bind IAuthViewModel::class
             factory { OrderFormViewModel(get(), get(), get()) } bind IOrderFormViewModel::class
-            factory { ItemEditViewModel(get(), get(), get() ,get()) } bind IItemEditViewModel::class
+            factory { ItemEditViewModel(get(), getOrNull(), get() ,get()) } bind IItemEditViewModel::class
         }
 
         startKoin {

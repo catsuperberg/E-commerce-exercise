@@ -10,10 +10,10 @@ interface IManagerStoreFrontViewModel {
     fun onOrdersScreen()
     fun onSignOut()
 
-    fun onEditItem(item: Item)
+    fun onEditItem(item: Item? = null)
 
     data class NavCallbacks(
         val onOrdersScreen: () -> Unit,
-        val onEditItem: (item: Item) -> Unit
+        val onEditItem: (item: Item?) -> Unit
     )
 }

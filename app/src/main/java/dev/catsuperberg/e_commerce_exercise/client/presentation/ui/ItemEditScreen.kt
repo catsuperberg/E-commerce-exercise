@@ -16,6 +16,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Photo
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
@@ -49,13 +50,40 @@ fun ItemEditScreen(viewModel: IItemEditViewModel) {
         Image(viewModel, Modifier.weight(0.45f))
         ItemDetailInputs(viewModel, modifier = Modifier.weight(1f))
 
+        Buttons(viewModel)
+    }
+}
+
+@Composable
+private fun Buttons(viewModel: IItemEditViewModel) {
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+    ) {
+        if(viewModel.id != null) {
+            Button(
+                onClick = viewModel::onDelete,
+                shape = MaterialTheme.shapes.large,
+                contentPadding = PaddingValues(16.dp),
+                modifier = Modifier
+                    .weight(0.2f),
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Delete,
+                    contentDescription = stringResource(R.string.delete_item),
+                    modifier = Modifier.size(32.dp)
+                )
+            }
+        }
+
         Button(
             onClick = viewModel::onApply,
             shape = MaterialTheme.shapes.large,
             contentPadding = PaddingValues(16.dp),
             modifier = Modifier
-                .fillMaxWidth(),
-        ){
+                .weight(1f),
+        ) {
             Text(
                 text = stringResource(R.string.store_item).uppercase(),
                 style = MaterialTheme.typography.headlineSmall,

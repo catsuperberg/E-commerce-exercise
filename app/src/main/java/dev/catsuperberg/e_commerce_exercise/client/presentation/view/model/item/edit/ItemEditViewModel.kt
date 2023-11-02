@@ -83,7 +83,7 @@ class ItemEditViewModel(
 
     private suspend fun store() {
         imageUri.value?.also { image ->
-            initialItem?.also { initial ->
+            val result = initialItem?.let { initial ->
                 val newImage = if(image != initialItem?.pathDownload?.toUri()) image else null
                 updater.updateItem(
                     item = initial.copy(
@@ -103,11 +103,26 @@ class ItemEditViewModel(
                     ),
                     imageUri = image
                 )
+
+            if(result.isSuccess)
+                navCallbacks.onSuccess()
+            else
+                Log.d("E", "не удалось загрузить товар")
         } ?: Log.d("E", "не выбрано изображение товара")
     }
 
     override fun onDelete() {
-        TODO("onDelete() not implemented in ItemEditViewModel")
+        initialItem?.let { initial ->
+            viewModelScope.launch { dispose(initial.id) }
+        }
+    }
+
+    private suspend fun dispose(id: String) {
+        val result = updater.disposeOfItem(id)
+        if(result.isSuccess)
+            navCallbacks.onSuccess()
+        else
+            Log.d("E", "не удалось удалить товар")
     }
 
     private fun inputsInvalid() = nameInvalid.value || priceInvalid.value
