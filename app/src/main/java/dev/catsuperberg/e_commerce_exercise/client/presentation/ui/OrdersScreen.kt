@@ -1,7 +1,6 @@
 package dev.catsuperberg.e_commerce_exercise.client.presentation.ui
 
 import android.util.Log
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -36,7 +35,6 @@ fun OrdersScreen(viewModel: IOrdersViewModel) {
         val append = pagingOrders.loadState.append
 
         LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(16.dp),
             modifier = Modifier.padding(top = innerPadding.calculateTopPadding(), start = 16.dp, end = 16.dp)
         ) {
             items(

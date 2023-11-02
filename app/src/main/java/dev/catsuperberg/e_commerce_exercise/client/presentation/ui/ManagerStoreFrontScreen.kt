@@ -49,7 +49,9 @@ fun ManagerStoreFrontScreen(viewModel: IManagerStoreFrontViewModel) {
         val refresh = pagingItems.loadState.refresh
         val append = pagingItems.loadState.append
 
-        LazyColumn(modifier = Modifier.padding(innerPadding)) {
+        LazyColumn(
+            modifier = Modifier.padding(top = innerPadding.calculateTopPadding(), start = 16.dp, end = 16.dp)
+        ) {
             items(
                 count = pagingItems.itemCount,
                 key = pagingItems.itemKey(),

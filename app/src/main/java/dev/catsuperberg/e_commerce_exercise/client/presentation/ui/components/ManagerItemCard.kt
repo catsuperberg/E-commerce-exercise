@@ -1,6 +1,7 @@
 package dev.catsuperberg.e_commerce_exercise.client.presentation.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -43,7 +44,7 @@ fun ManagerItemCard(item: Item, onEdit: (Item) -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .aspectRatio(2.5f)
-            .padding(12.dp, 6.dp)
+            .padding(vertical =  8.dp)
     ) {
         Row(
             modifier = Modifier.padding(12.dp)
@@ -83,13 +84,15 @@ fun ManagerItemCard(item: Item, onEdit: (Item) -> Unit) {
                     .fillMaxHeight()
                     .weight(0.3f)
             ) {
-                AsyncImage(
-                    model = item.pathDownload,
-                    contentDescription = stringResource(R.string.picture_content_description, item.name),
-                    modifier = Modifier
-                        .weight(1f)
-                        .clip(RoundedCornerShape(8.dp)),
-                )
+                Box(modifier = Modifier.weight(1f)) {
+                    AsyncImage(
+                        model = item.pathDownload,
+                        contentDescription = stringResource(R.string.picture_content_description, item.name),
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(8.dp)),
+                    )
+                }
+
                 Button(
                     onClick = { onEdit(item) },
                     shape = RoundedCornerShape(8.dp),

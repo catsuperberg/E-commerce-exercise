@@ -1,7 +1,6 @@
 package dev.catsuperberg.e_commerce_exercise.client.presentation.ui
 
 import android.util.Log
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -56,7 +55,6 @@ fun StoreFrontScreen(viewModel: IStoreFrontViewModel) {
         val placeholderImage = painterResource(R.drawable.ic_item_placeholder_background)
 
         LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(16.dp),
             modifier = Modifier
                 .fillMaxSize()
                 .padding(top = innerPadding.calculateTopPadding(), start = 16.dp, end = 16.dp)

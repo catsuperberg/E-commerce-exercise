@@ -24,7 +24,7 @@ class IgnoreInvalidItemMapper : IItemMapper {
 
     override fun map(item: NewItem): Map<String, Any> = hashMapOf(
         ItemSchema.name to item.name,
-        ItemSchema.description to (item.description ?: ""),
+        ItemSchema.description to item.description,
         ItemSchema.price to item.price,
         ItemSchema.available to item.available,
         ItemSchema.pathGs to (item.pathGs ?: ""),

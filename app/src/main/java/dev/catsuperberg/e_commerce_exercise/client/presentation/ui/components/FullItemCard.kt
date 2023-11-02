@@ -51,6 +51,7 @@ fun FullItemCard(item: Item, index: Int, placeholderPainter: Painter, viewModel:
         ),
         modifier = Modifier
             .fillMaxWidth()
+            .padding(vertical =  8.dp)
     ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(16.dp),

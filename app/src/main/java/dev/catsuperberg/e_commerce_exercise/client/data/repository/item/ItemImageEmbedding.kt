@@ -1,7 +1,6 @@
 package dev.catsuperberg.e_commerce_exercise.client.data.repository.item
 
 import android.net.Uri
-import android.util.Log
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask

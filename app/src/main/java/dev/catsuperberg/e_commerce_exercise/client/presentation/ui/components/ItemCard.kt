@@ -45,6 +45,7 @@ fun ItemCard(item: Item, index: Int, placeholderPainter: Painter, viewModel: ISt
         modifier = Modifier
             .fillMaxWidth()
             .aspectRatio(3f)
+            .padding(vertical =  8.dp)
     ) {
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,

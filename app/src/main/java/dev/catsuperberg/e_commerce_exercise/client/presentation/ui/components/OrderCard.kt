@@ -45,6 +45,7 @@ fun OrderCard(order: Order, onFulfill: (Order) -> Unit, onCancel: (Order) -> Uni
         colors = cardColors,
         modifier = Modifier
             .fillMaxWidth()
+            .padding(vertical =  8.dp)
     ) {
         Row(
             modifier = Modifier.padding(12.dp)
