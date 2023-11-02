@@ -1,7 +1,6 @@
 package dev.catsuperberg.e_commerce_exercise.client.presentation.ui
 
 import android.util.Log
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -96,25 +95,23 @@ fun ManagerStoreFrontScreen(viewModel: IManagerStoreFrontViewModel) {
         val refresh = pagingItems.loadState.refresh
         val append = pagingItems.loadState.append
 
-        Column(modifier = Modifier.padding(innerPadding)) {
-            LazyColumn {
-                items(
-                    count = pagingItems.itemCount,
-                    key = pagingItems.itemKey(),
-                    contentType = pagingItems.itemContentType()
-                ) { index ->
-                    val item = pagingItems[index]
-                    item?.also { ManagerItemCard(item = it, onEdit = viewModel::onEditItem) }
-                }
+        LazyColumn(modifier = Modifier.padding(innerPadding)) {
+            items(
+                count = pagingItems.itemCount,
+                key = pagingItems.itemKey(),
+                contentType = pagingItems.itemContentType()
+            ) { index ->
+                val item = pagingItems[index]
+                item?.also { ManagerItemCard(item = it, onEdit = viewModel::onEditItem) }
             }
+        }
 
-            pagingItems.loadState.apply {
-                when {
-                    refresh is LoadState.Loading -> ProgressIndicator()
-                    refresh is LoadState.Error -> Log.d("E", refresh.toString())
-                    append is LoadState.Loading -> ProgressIndicator()
-                    append is LoadState.Error -> Log.d("E", append.toString())
-                }
+        pagingItems.loadState.apply {
+            when {
+                refresh is LoadState.Loading -> ProgressIndicator()
+                refresh is LoadState.Error -> Log.d("E", refresh.toString())
+                append is LoadState.Loading -> ProgressIndicator()
+                append is LoadState.Error -> Log.d("E", append.toString())
             }
         }
     }

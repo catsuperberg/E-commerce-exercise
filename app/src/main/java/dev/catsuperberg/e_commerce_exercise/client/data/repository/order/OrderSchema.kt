@@ -1,14 +1,14 @@
 package dev.catsuperberg.e_commerce_exercise.client.data.repository.order
 
 object OrderSchema {
-    val collectionName = "orders"
+    const val collectionName = "orders"
 
-    val customerName = "customer_name"
-    val customerPhone = "customer_phone"
-    val customerEmail = "customer_email"
-    val itemId = "item_id"
-    val sum = "sum"
-    val created = "created"
-    val fulfilled = "fulfilled"
-    val canceled = "canceled"
+    const val customerName = "customer_name"
+    const val customerPhone = "customer_phone"
+    const val customerEmail = "customer_email"
+    const val itemId = "item_id"
+    const val sum = "sum"
+    const val created = "created"
+    const val fulfilled = "fulfilled"
+    const val canceled = "canceled"
 }

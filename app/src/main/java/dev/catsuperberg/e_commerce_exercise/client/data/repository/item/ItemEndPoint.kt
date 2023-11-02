@@ -8,7 +8,7 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 class ItemEndPoint(private val mapper: IItemMapper) : IItemEndPoint {
-    val db = Firebase.firestore
+    private val db = Firebase.firestore
 
     override suspend fun upload(item: Item): Result<String> {
         val mappedData = mapper.map(item)

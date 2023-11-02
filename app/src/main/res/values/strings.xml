@@ -35,4 +35,5 @@
     <string name="delete_item">удалить товар</string>
     <string name="order_management">заказы</string>
     <string name="composed_message">"ВууУууу, смотри что я нашёл в магазине Бу́тик.\nЭто %1$s и стоит всего %2$s забытых завтраков."</string>
+    <string name="auth">авторизация</string>
 </resources>

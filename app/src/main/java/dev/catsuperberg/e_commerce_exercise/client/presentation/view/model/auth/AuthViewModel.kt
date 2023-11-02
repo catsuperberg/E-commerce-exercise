@@ -24,7 +24,6 @@ class AuthViewModel(
     override val passwordInvalid: MutableStateFlow<Boolean> = MutableStateFlow(false)
     override val repeatPasswordInvalid: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
-    override val authenticated = accountService.signedIn
     private var authJob: Job? = null
 
     override fun onSignUpChange(value: Boolean) {
@@ -76,10 +75,14 @@ class AuthViewModel(
 
     private suspend fun singUp() {
         val result = accountService.signUp(email.value, password.value)
+        if(result.isSuccess)
+            navCallbacks.onSuccess()
+        else
+            Log.d("E", "Sign up failed")
     }
 
-    override fun onSignOut() {
-        accountService.signOut()
+    override fun onBack() {
+        navCallbacks.onBack()
     }
 
     private fun inputsInvalid() =

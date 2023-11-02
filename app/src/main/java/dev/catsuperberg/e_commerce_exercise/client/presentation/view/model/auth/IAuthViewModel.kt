@@ -15,17 +15,16 @@ interface IAuthViewModel {
     val passwordInvalid: StateFlow<Boolean>
     val repeatPasswordInvalid: StateFlow<Boolean>
 
-    val authenticated: StateFlow<Boolean>
-
     fun onSignUpChange(value: Boolean)
     fun onEmailChange(value: String)
     fun onPasswordChange(value: String)
     fun onRepeatPasswordChange(value: String)
     fun onRevealPasswordsChange(value: Boolean)
     fun onAuth()
-    fun onSignOut()
+    fun onBack()
 
     data class NavCallbacks(
         val onSuccess: () -> Unit,
+        val onBack: () -> Unit
     )
 }

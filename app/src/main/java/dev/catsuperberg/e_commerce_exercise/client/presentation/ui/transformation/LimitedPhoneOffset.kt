@@ -2,7 +2,7 @@ package dev.catsuperberg.e_commerce_exercise.client.presentation.ui.transformati
 
 import androidx.compose.ui.text.input.OffsetMapping
 
-class LimitedPhoneOffset() : OffsetMapping {
+class LimitedPhoneOffset : OffsetMapping {
     private val rawCarrierEnd = 2
     private val rawFirstEnd = 5
     private val rawSecondEnd = 7

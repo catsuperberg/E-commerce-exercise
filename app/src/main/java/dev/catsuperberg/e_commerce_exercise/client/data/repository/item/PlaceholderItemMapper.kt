@@ -10,7 +10,7 @@ class PlaceholderItemMapper : IItemMapper {
     private val chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
     private val random = Random()
 
-    override fun map(document: QueryDocumentSnapshot): Item? {
+    override fun map(document: QueryDocumentSnapshot): Item {
         return Item(
             id = document.id,
             name = document.getString(ItemSchema.name) ?: randomString(12),
@@ -26,7 +26,7 @@ class PlaceholderItemMapper : IItemMapper {
 
     override fun map(item: NewItem): Map<String, Any> = hashMapOf(
         ItemSchema.name to item.name,
-        ItemSchema.description to (item.description ?: ""),
+        ItemSchema.description to item.description,
         ItemSchema.price to item.price,
         ItemSchema.available to item.available,
         ItemSchema.pathGs to (item.pathGs ?: ""),

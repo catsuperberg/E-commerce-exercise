@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -45,8 +44,6 @@ fun OrderCard(order: Order, onFulfill: (Order) -> Unit, onCancel: (Order) -> Uni
         colors = cardColors,
         modifier = Modifier
             .fillMaxWidth()
-            .aspectRatio(2.5f)
-            .padding(12.dp, 6.dp)
     ) {
         Row(
             modifier = Modifier.padding(12.dp)
@@ -57,42 +54,14 @@ fun OrderCard(order: Order, onFulfill: (Order) -> Unit, onCancel: (Order) -> Uni
                     .fillMaxHeight()
                     .weight(0.75f)
             ) {
-                Text(
-                    text = order.customerName,
-                    style = MaterialTheme.typography.bodyLarge,
-                    fontWeight = FontWeight.Black
-                )
-                Text(
-                    text = stringResource(R.string.id, order.itemId),
-                    style = MaterialTheme.typography.bodyLarge,
-                    fontWeight = FontWeight.Black
-                )
-                Text(
-                    text = order.customerPhone,
-                    style = MaterialTheme.typography.bodyMedium,
-                )
-                Text(
-                    text = order.customerEmail,
-                    style = MaterialTheme.typography.bodyMedium,
-                )
-                order.created?.also {
-                    val date = it.toDate()
-                    Text(
-                        text = date.toString(),
-                        style = MaterialTheme.typography.bodyMedium,
-                    )
-                }
-                Text(
-                    text = stringResource(R.string.sum, String.format("%.2f", order.sum)),
-                    style = MaterialTheme.typography.bodyLarge,
-                )
+                TextFields(order)
             }
             Column(
                 horizontalAlignment = Alignment.End,
                 verticalArrangement = Arrangement.spacedBy(12.dp),
                 modifier = Modifier
                     .fillMaxHeight()
-                    .weight(0.3f)
+                    .weight(0.25f)
             ) {
                 if(showButtons) {
                     Button(
@@ -101,7 +70,6 @@ fun OrderCard(order: Order, onFulfill: (Order) -> Unit, onCancel: (Order) -> Uni
                         contentPadding = PaddingValues(0.dp),
                         modifier = Modifier
                             .fillMaxWidth()
-                            .weight(1f)
                     ) {
                         Icon(
                             imageVector = Icons.Filled.Check,
@@ -114,7 +82,6 @@ fun OrderCard(order: Order, onFulfill: (Order) -> Unit, onCancel: (Order) -> Uni
                         contentPadding = PaddingValues(0.dp),
                         modifier = Modifier
                             .fillMaxWidth()
-                            .weight(1f)
                     ) {
                         Icon(
                             imageVector = Icons.Filled.Close,
@@ -125,4 +92,37 @@ fun OrderCard(order: Order, onFulfill: (Order) -> Unit, onCancel: (Order) -> Uni
             }
         }
     }
+}
+
+@Composable
+private fun TextFields(order: Order) {
+    Text(
+        text = order.customerName,
+        style = MaterialTheme.typography.bodyLarge,
+        fontWeight = FontWeight.Black
+    )
+    Text(
+        text = stringResource(R.string.id, order.itemId),
+        style = MaterialTheme.typography.bodyLarge,
+        fontWeight = FontWeight.Black
+    )
+    Text(
+        text = order.customerPhone,
+        style = MaterialTheme.typography.bodyMedium,
+    )
+    Text(
+        text = order.customerEmail,
+        style = MaterialTheme.typography.bodyMedium,
+    )
+    order.created?.also {
+        val date = it.toDate()
+        Text(
+            text = date.toString(),
+            style = MaterialTheme.typography.bodyMedium,
+        )
+    }
+    Text(
+        text = stringResource(R.string.sum, String.format("%.2f", order.sum)),
+        style = MaterialTheme.typography.bodyLarge,
+    )
 }

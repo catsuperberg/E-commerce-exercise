@@ -42,7 +42,7 @@ class ItemDetailsSender(
 
     private fun Intent.applyImage(imageUri: Uri) {
         addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-        setDataAndType(imageUri, context.contentResolver.getType(imageUri));
+        setDataAndType(imageUri, context.contentResolver.getType(imageUri))
         putExtra(Intent.EXTRA_STREAM, imageUri)
     }
 

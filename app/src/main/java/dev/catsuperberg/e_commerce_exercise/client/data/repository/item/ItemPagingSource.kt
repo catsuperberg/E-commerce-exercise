@@ -26,7 +26,7 @@ class ItemPagingSource(
                 nextKey = nextPage
             )
         } catch (e: Exception) {
-            Log.e("E", LoadResult.Error<QuerySnapshot, Item>(e).toString());
+            Log.e("E", LoadResult.Error<QuerySnapshot, Item>(e).toString())
             LoadResult.Error(e)
         }
     }

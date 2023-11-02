@@ -84,7 +84,7 @@ class ItemEditViewModel(
     private suspend fun store() {
         imageUri.value?.also { image ->
             val result = initialItem?.let { initial ->
-                val newImage = if(image != initialItem?.pathDownload?.toUri()) image else null
+                val newImage = if(image != initial.pathDownload?.toUri()) image else null
                 updater.updateItem(
                     item = initial.copy(
                         name = name.value,

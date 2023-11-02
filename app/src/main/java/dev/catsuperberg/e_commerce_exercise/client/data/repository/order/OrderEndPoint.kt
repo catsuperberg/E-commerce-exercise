@@ -8,7 +8,7 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 class OrderEndPoint(private val mapper: IOrderMapper) : IOrderEndPoint {
-    val db = Firebase.firestore
+    private val db = Firebase.firestore
 
     override suspend fun create(order: Order): Result<String> {
         val mappedData = mapper.map(order)

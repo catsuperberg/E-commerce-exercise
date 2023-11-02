@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-class AccountService() : IAccountService {
+class AccountService : IAccountService {
     private val scope = CoroutineScope(Job() + Dispatchers.IO)
     private val auth = Firebase.auth
     private val currentUser = callbackFlow {

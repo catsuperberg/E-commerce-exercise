@@ -26,7 +26,7 @@ class OrderPagingSource(
                 nextKey = nextPage
             )
         } catch (e: Exception) {
-            Log.e("E", LoadResult.Error<QuerySnapshot, Order>(e).toString());
+            Log.e("E", LoadResult.Error<QuerySnapshot, Order>(e).toString())
             LoadResult.Error(e)
         }
     }
