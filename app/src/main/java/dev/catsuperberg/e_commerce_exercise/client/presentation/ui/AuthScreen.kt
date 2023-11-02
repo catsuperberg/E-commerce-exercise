@@ -140,7 +140,12 @@ private fun AuthInputs(
             imeAction = ImeAction.Next
         ),
         keyboardActions = KeyboardActions(
-            onNext = { focusManager.moveFocus(FocusDirection.Down) }
+            onNext = {
+                if (isSignUp.value) focusManager.moveFocus(FocusDirection.Down) else {
+                    viewModel.onAuth()
+                    focusManager.clearFocus()
+                }
+            }
         ),
         label = { Text(stringResource(R.string.password)) },
         shape = MaterialTheme.shapes.small,
@@ -173,7 +178,7 @@ private fun AuthInputs(
                 imeAction = ImeAction.Next
             ),
             keyboardActions = KeyboardActions(
-                onNext = { focusManager.clearFocus() }
+                onNext = { if(isSignUp.value) viewModel.onAuth() else focusManager.clearFocus() }
             ),
             label = { Text(stringResource(R.string.password)) },
             shape = MaterialTheme.shapes.small,

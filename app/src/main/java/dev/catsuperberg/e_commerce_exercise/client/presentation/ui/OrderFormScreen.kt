@@ -134,7 +134,10 @@ private fun CustomerContactInfoInputs(viewModel: IOrderFormViewModel, modifier: 
                 imeAction = ImeAction.Next
             ),
             keyboardActions = KeyboardActions(
-                onNext = { focusManager.clearFocus() }
+                onNext = {
+                    viewModel.onSendOrder()
+                    focusManager.clearFocus()
+                }
             ),
             label = { Text(stringResource(R.string.customer_email)) },
             shape = MaterialTheme.shapes.small,
