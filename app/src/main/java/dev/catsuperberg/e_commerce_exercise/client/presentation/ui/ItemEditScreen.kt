@@ -66,7 +66,7 @@ fun ItemEditScreen(viewModel: IItemEditViewModel) {
 
 @Composable
 private fun Image(viewModel: IItemEditViewModel, modifier: Modifier) {
-    val pickedUri = viewModel.pictureUri.collectAsState()
+    val pickedUri = viewModel.imageUri.collectAsState()
 
     Box(
         contentAlignment = Alignment.Center,
@@ -107,6 +107,9 @@ private fun ItemDetailInputs(viewModel: IItemEditViewModel, modifier: Modifier) 
     val priceString = viewModel.price.collectAsState()
     val availableState = viewModel.available.collectAsState()
 
+    val nameError = viewModel.nameInvalid.collectAsState()
+    val priceError = viewModel.priceInvalid.collectAsState()
+
     val focusManager = LocalFocusManager.current
 
     Column(
@@ -135,7 +138,7 @@ private fun ItemDetailInputs(viewModel: IItemEditViewModel, modifier: Modifier) 
             onValueChange = viewModel::onNameChange,
             modifier = Modifier
                 .fillMaxWidth(),
-            isError = false
+            isError = nameError.value
         )
 
         OutlinedTextField(
@@ -152,7 +155,6 @@ private fun ItemDetailInputs(viewModel: IItemEditViewModel, modifier: Modifier) 
             onValueChange = viewModel::onDescriptionChange,
             modifier = Modifier
                 .fillMaxWidth(),
-            isError = false
         )
 
         OutlinedTextField(
@@ -169,7 +171,7 @@ private fun ItemDetailInputs(viewModel: IItemEditViewModel, modifier: Modifier) 
             onValueChange = viewModel::onPriceChange,
             modifier = Modifier
                 .fillMaxWidth(),
-            isError = false
+            isError = priceError.value
         )
 
 

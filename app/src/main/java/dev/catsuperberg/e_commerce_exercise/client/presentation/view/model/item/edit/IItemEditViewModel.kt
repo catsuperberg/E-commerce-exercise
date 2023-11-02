@@ -1,5 +1,6 @@
 package dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.item.edit
 
+import android.net.Uri
 import kotlinx.coroutines.flow.StateFlow
 
 interface IItemEditViewModel {
@@ -9,7 +10,10 @@ interface IItemEditViewModel {
     val price: StateFlow<String>
     val available: StateFlow<Boolean>
 
-    val pictureUri: StateFlow<String?>
+    val nameInvalid: StateFlow<Boolean>
+    val priceInvalid: StateFlow<Boolean>
+
+    val imageUri: StateFlow<Uri?>
 
     fun onNameChange(value: String)
     fun onDescriptionChange(value: String)

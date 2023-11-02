@@ -7,7 +7,11 @@ import coil.Coil
 import coil.ImageLoader
 import coil.disk.DiskCache
 import coil.request.CachePolicy
+import dev.catsuperberg.e_commerce_exercise.client.data.repository.item.IItemEndPoint
+import dev.catsuperberg.e_commerce_exercise.client.data.repository.item.IItemImageEmbedding
 import dev.catsuperberg.e_commerce_exercise.client.data.repository.item.IItemMapper
+import dev.catsuperberg.e_commerce_exercise.client.data.repository.item.ItemEndPoint
+import dev.catsuperberg.e_commerce_exercise.client.data.repository.item.ItemImageEmbedding
 import dev.catsuperberg.e_commerce_exercise.client.data.repository.item.ItemPagingSource
 import dev.catsuperberg.e_commerce_exercise.client.data.repository.item.PlaceholderItemMapper
 import dev.catsuperberg.e_commerce_exercise.client.data.repository.order.IOrderEndPoint
@@ -92,6 +96,8 @@ class MainApp : Application() {
 
             singleOf(::AccountService) binds(arrayOf(IAccountService::class, IAuthState::class))
             singleOf(::ImagePicker) binds(arrayOf(IMediaRequestHoisting::class, IImagePicker::class))
+            factoryOf(::ItemImageEmbedding) bind IItemImageEmbedding::class
+            factoryOf(::ItemEndPoint) bind IItemEndPoint::class
             factoryOf(::ItemUpdater) bind IItemUpdater::class
 
             factory { StoreFrontViewModel(get(), get(), get()) } bind IStoreFrontViewModel::class

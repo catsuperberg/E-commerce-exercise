@@ -18,7 +18,7 @@ class ItemDetailsSender(
     private val pathStart = "gs://${firebaseStorage.reference.bucket}/"
 
     override fun sendToMessenger(item: Item) {
-        item.pathGS?.also { gsPath -> sendWithPicture(gsPath, item) } ?: sendIntent(listOf { it.applyText(item) } )
+        item.pathGs?.also { gsPath -> sendWithPicture(gsPath, item) } ?: sendIntent(listOf { it.applyText(item) } )
     }
 
     private fun sendWithPicture(gsPath: String, item: Item) {
