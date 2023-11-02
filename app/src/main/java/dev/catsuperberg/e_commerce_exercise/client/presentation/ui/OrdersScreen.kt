@@ -7,9 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.Assignment
-import androidx.compose.material.icons.automirrored.filled.ExitToApp
-import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -22,7 +20,6 @@ import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -32,12 +29,11 @@ import androidx.paging.compose.itemContentType
 import androidx.paging.compose.itemKey
 import dev.catsuperberg.e_commerce_exercise.client.R
 import dev.catsuperberg.e_commerce_exercise.client.presentation.ui.common.ProgressIndicator
-import dev.catsuperberg.e_commerce_exercise.client.presentation.ui.components.ManagerItemCard
-import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.manager.store.front.IManagerStoreFrontViewModel
+import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.orders.IOrdersViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ManagerStoreFrontScreen(viewModel: IManagerStoreFrontViewModel) {
+fun OrdersScreen(viewModel: IOrdersViewModel) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -51,38 +47,17 @@ fun ManagerStoreFrontScreen(viewModel: IManagerStoreFrontViewModel) {
                 ),
                 title = {
                     Text(
-                        text = stringResource(R.string.manager_store_front).uppercase(),
+                        text = stringResource(R.string.order_management).uppercase(),
                         style = MaterialTheme.typography.titleMedium,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
                 },
                 navigationIcon = {
-                    Icon(
-                        painter = painterResource(R.drawable.ic_store_logo),
-                        contentDescription = null,
-                        modifier = Modifier.size(32.dp)
-                    )
-                },
-                actions = {
-                    IconButton(onClick = viewModel::onEditItem) {
+                    IconButton(onClick = viewModel::onBack) {
                         Icon(
-                            imageVector = Icons.Filled.Add,
-                            contentDescription = stringResource(R.string.create_item),
-                            modifier = Modifier.size(32.dp)
-                        )
-                    }
-                    IconButton(onClick = viewModel::onOrdersScreen) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.Assignment,
-                            contentDescription = stringResource(R.string.orders),
-                            modifier = Modifier.size(32.dp)
-                        )
-                    }
-                    IconButton(onClick = viewModel::onSignOut) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ExitToApp,
-                            contentDescription = stringResource(R.string.sign_out),
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = null,
                             modifier = Modifier.size(32.dp)
                         )
                     }
@@ -92,7 +67,7 @@ fun ManagerStoreFrontScreen(viewModel: IManagerStoreFrontViewModel) {
             )
         }
     ) { innerPadding ->
-        val pagingItems = viewModel.items.collectAsLazyPagingItems()
+        val pagingItems = viewModel.orders.collectAsLazyPagingItems()
         val refresh = pagingItems.loadState.refresh
         val append = pagingItems.loadState.append
 
@@ -103,8 +78,10 @@ fun ManagerStoreFrontScreen(viewModel: IManagerStoreFrontViewModel) {
                     key = pagingItems.itemKey(),
                     contentType = pagingItems.itemContentType()
                 ) { index ->
-                    val item = pagingItems[index]
-                    item?.also { ManagerItemCard(item = it, onEdit = viewModel::onEditItem) }
+                    val order = pagingItems[index]
+                    order?.also {
+                        Text(it.id ?: "placeholder")
+                    }
                 }
             }
 

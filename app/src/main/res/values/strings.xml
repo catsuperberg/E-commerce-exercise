@@ -32,4 +32,5 @@
     <string name="pick_image">выбор изображения</string>
     <string name="create_item">создать товар</string>
     <string name="delete_item">удалить товар</string>
+    <string name="order_management">заказы</string>
 </resources>

@@ -18,11 +18,13 @@ import dev.catsuperberg.e_commerce_exercise.client.presentation.ui.AuthScreen
 import dev.catsuperberg.e_commerce_exercise.client.presentation.ui.ItemEditScreen
 import dev.catsuperberg.e_commerce_exercise.client.presentation.ui.ManagerStoreFrontScreen
 import dev.catsuperberg.e_commerce_exercise.client.presentation.ui.OrderFormScreen
+import dev.catsuperberg.e_commerce_exercise.client.presentation.ui.OrdersScreen
 import dev.catsuperberg.e_commerce_exercise.client.presentation.ui.StoreFrontScreen
 import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.auth.IAuthViewModel
 import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.item.edit.IItemEditViewModel
 import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.manager.store.front.IManagerStoreFrontViewModel
 import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.order.form.IOrderFormViewModel
+import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.orders.IOrdersViewModel
 import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.store.front.IStoreFrontViewModel
 import kotlinx.parcelize.Parcelize
 import org.koin.core.component.KoinScopeComponent
@@ -67,7 +69,7 @@ class MainNode(
                 val signedIn = authState.signedIn.collectAsState()
                 if(signedIn.value) {
                     val callbacks = IManagerStoreFrontViewModel.NavCallbacks(
-                        onOrdersScreen = {},
+                        onOrdersScreen = { backStack.push(NavTarget.OrdersScreen) },
                         onEditItem = { item -> backStack.push(NavTarget.ItemEditScreen(item)) },
                     )
                     ManagerStoreFrontScreen(get { parametersOf(callbacks) })
@@ -87,15 +89,16 @@ class MainNode(
                 OrderFormScreen(get { parametersOf(callbacks, navTarget.item) })
             }
             is NavTarget.AuthScreen -> screenNode(buildContext) {
-                val callbacks = IAuthViewModel.NavCallbacks( onSuccess = { backStack.pop() } )
+                val callbacks = IAuthViewModel.NavCallbacks( onSuccess = { backStack.pop() })
                 AuthScreen(get { parametersOf(callbacks) })
             }
             is NavTarget.ItemEditScreen -> screenNode(buildContext) {
-                val callbacks = IItemEditViewModel.NavCallbacks( onSuccess = { backStack.pop() } )
+                val callbacks = IItemEditViewModel.NavCallbacks( onSuccess = { backStack.pop() })
                 ItemEditScreen(get { parametersOf(callbacks, navTarget.item) })
             }
             is NavTarget.OrdersScreen -> screenNode(buildContext) {
-                StoreFrontScreen(get())
+                val callbacks = IOrdersViewModel.NavCallbacks( onBack = { backStack.pop() })
+                OrdersScreen(get { parametersOf(callbacks) })
             }
         }
 

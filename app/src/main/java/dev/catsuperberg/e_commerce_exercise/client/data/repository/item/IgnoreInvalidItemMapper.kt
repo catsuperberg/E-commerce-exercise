@@ -12,7 +12,7 @@ class IgnoreInvalidItemMapper : IItemMapper {
             id = document.id,
             name = document.getString(ItemSchema.name)!!,
             description = document.getString(ItemSchema.description),
-            price = document.getDouble(ItemSchema.price)?.toFloat()!!,
+            price = document.getDouble(ItemSchema.price)!!.toFloat(),
             available = document.getBoolean(ItemSchema.available)!!,
             pathGs = document.getString(ItemSchema.pathGs),
             pathDownload = document.getString(ItemSchema.pathDownload),

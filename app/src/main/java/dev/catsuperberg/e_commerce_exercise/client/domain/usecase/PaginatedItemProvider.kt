@@ -13,11 +13,7 @@ class PaginatedItemProvider(
     private val availableItemSource: PagingSource<QuerySnapshot, Item>,
     private val config: PagingConfig
 ) : IPaginatedItemProvider {
-    override fun createItemPagerFlow(): Flow<PagingData<Item>> {
-        return Pager(config = config) { itemSource }.flow
-    }
-
-    override fun createAvailableItemPagerFlow(): Flow<PagingData<Item>> {
-        return Pager(config = config) { availableItemSource }.flow
-    }
+    override fun createItemPagerFlow(): Flow<PagingData<Item>> = Pager(config = config) { itemSource }.flow
+    override fun createAvailableItemPagerFlow(): Flow<PagingData<Item>> =
+        Pager(config = config) { availableItemSource }.flow
 }

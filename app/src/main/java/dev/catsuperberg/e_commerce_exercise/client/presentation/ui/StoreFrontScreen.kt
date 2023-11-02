@@ -59,7 +59,8 @@ fun StoreFrontScreen(viewModel: IStoreFrontViewModel) {
                 },
                 navigationIcon = {
                     Icon(
-                        painter = painterResource(R.drawable.ic_store_logo), contentDescription = null,
+                        painter = painterResource(R.drawable.ic_store_logo),
+                        contentDescription = null,
                         modifier = Modifier.size(32.dp)
                     )
                 },
