@@ -4,4 +4,6 @@ import dev.catsuperberg.e_commerce_exercise.client.domain.model.Order
 
 interface IOrderEndPoint {
     suspend fun create(order: Order) : Result<String>
+    fun fulfill(id: String)
+    fun cancel(id: String)
 }

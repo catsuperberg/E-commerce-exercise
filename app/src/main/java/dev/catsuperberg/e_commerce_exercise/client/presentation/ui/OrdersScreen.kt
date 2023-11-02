@@ -29,6 +29,7 @@ import androidx.paging.compose.itemContentType
 import androidx.paging.compose.itemKey
 import dev.catsuperberg.e_commerce_exercise.client.R
 import dev.catsuperberg.e_commerce_exercise.client.presentation.ui.common.ProgressIndicator
+import dev.catsuperberg.e_commerce_exercise.client.presentation.ui.components.OrderCard
 import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.orders.IOrdersViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -80,7 +81,7 @@ fun OrdersScreen(viewModel: IOrdersViewModel) {
                 ) { index ->
                     val order = pagingItems[index]
                     order?.also {
-                        Text(it.id ?: "placeholder")
+                        OrderCard(it, viewModel::onFulfill, viewModel::onCancel)
                     }
                 }
             }

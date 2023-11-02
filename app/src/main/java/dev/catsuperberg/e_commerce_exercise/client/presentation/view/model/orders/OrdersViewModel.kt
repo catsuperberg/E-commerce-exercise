@@ -4,20 +4,22 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import dev.catsuperberg.e_commerce_exercise.client.domain.model.Order
+import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.IOrderUpdater
 import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.IPaginatedOrderProvider
 
 class OrdersViewModel(
     private val navCallbacks: IOrdersViewModel.NavCallbacks,
+    private val orderUpdater: IOrderUpdater,
     orderProvider: IPaginatedOrderProvider
 ) : ViewModel(), IOrdersViewModel {
     override val orders = orderProvider.createOrderPagerFlow().cachedIn(viewModelScope)
 
     override fun onFulfill(order: Order) {
-        TODO("Not yet implemented")
+        order.id?.also(orderUpdater::fulfill)
     }
 
     override fun onCancel(order: Order) {
-        TODO("Not yet implemented")
+        order.id?.also(orderUpdater::cancel)
     }
 
     override fun onBack() {

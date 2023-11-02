@@ -16,6 +16,7 @@
     <string name="orders">заказы</string>
     <string name="manager_store_front">витрина товаров</string>
     <string name="price">стоимость: %1$s</string>
+    <string name="sum">сумма: %1$s</string>
     <string name="id">арт.: %1$s</string>
     <string name="unavailable">товар недоступен</string>
     <string name="picture_content_description">на изоброжении показано: %1$s</string>

@@ -30,12 +30,14 @@ import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.IItemDetailsSe
 import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.IItemUpdater
 import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.IMediaRequestHoisting
 import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.IOrderRegistration
+import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.IOrderUpdater
 import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.IPaginatedItemProvider
 import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.IPaginatedOrderProvider
 import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.ImagePicker
 import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.ItemDetailsSender
 import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.ItemUpdater
 import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.OrderRegistration
+import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.OrderUpdater
 import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.PaginatedItemProvider
 import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.PaginatedOrderProvider
 import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.auth.AuthViewModel
@@ -106,13 +108,14 @@ class MainApp : Application() {
             factoryOf(::ItemImageEmbedding) bind IItemImageEmbedding::class
             factoryOf(::ItemEndPoint) bind IItemEndPoint::class
             factoryOf(::ItemUpdater) bind IItemUpdater::class
+            factoryOf(::OrderUpdater) bind IOrderUpdater::class
 
             factory { StoreFrontViewModel(get(), get(), get()) } bind IStoreFrontViewModel::class
             factory { ManagerStoreFrontViewModel(get(), get(), get()) } bind IManagerStoreFrontViewModel::class
             factory { AuthViewModel(get(), get()) } bind IAuthViewModel::class
             factory { OrderFormViewModel(get(), get(), get()) } bind IOrderFormViewModel::class
             factory { ItemEditViewModel(get(), getOrNull(), get() ,get()) } bind IItemEditViewModel::class
-            factory { OrdersViewModel(get(), get()) } bind IOrdersViewModel::class
+            factory { OrdersViewModel(get(), get(), get()) } bind IOrdersViewModel::class
         }
 
         startKoin {
