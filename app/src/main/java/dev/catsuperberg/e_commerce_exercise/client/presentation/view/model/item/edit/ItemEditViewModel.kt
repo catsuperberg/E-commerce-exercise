@@ -13,6 +13,8 @@ import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.IItemUpdater
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class ItemEditViewModel(
@@ -25,38 +27,45 @@ class ItemEditViewModel(
 
     override val id = initialItem?.id
 
-    override val name: MutableStateFlow<String> = MutableStateFlow(initialItem?.name ?: "")
-    override val description: MutableStateFlow<String> = MutableStateFlow(initialItem?.description ?: "")
-    override val price: MutableStateFlow<String> = MutableStateFlow(
+    private val _name: MutableStateFlow<String> = MutableStateFlow(initialItem?.name ?: "")
+    override val name: StateFlow<String> = _name.asStateFlow()
+    private val _description: MutableStateFlow<String> = MutableStateFlow(initialItem?.description ?: "")
+    override val description: StateFlow<String> = _description.asStateFlow()
+    private val _price: MutableStateFlow<String> = MutableStateFlow(
         initialItem?.price?.let { String.format("%.2f", it) } ?: ""
     )
-    override val available: MutableStateFlow<Boolean> = MutableStateFlow(initialItem?.available ?: true)
+    override val price: StateFlow<String> = _price.asStateFlow()
+    private val _available: MutableStateFlow<Boolean> = MutableStateFlow(initialItem?.available ?: true)
+    override val available: StateFlow<Boolean> = _available.asStateFlow()
 
-    override val nameInvalid: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    override val priceInvalid: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    private val _nameInvalid: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    override val nameInvalid: StateFlow<Boolean> = _nameInvalid.asStateFlow()
+    private val _priceInvalid: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    override val priceInvalid: StateFlow<Boolean> = _priceInvalid.asStateFlow()
 
-    override val imageUri: MutableStateFlow<Uri?> = MutableStateFlow(initialItem?.pathDownload?.toUri())
+    private val _imageUri: MutableStateFlow<Uri?> = MutableStateFlow(initialItem?.pathDownload?.toUri())
+    override val imageUri: StateFlow<Uri?> = _imageUri.asStateFlow()
 
     override val snackBarMessage: MutableSharedFlow<StringResource> = MutableSharedFlow(1)
 
     private var storeJob: Job? = null
 
     override fun onNameChange(value: String) {
-        nameInvalid.value = false
-        name.value = value
+        _nameInvalid.value = false
+        _name.value = value
     }
 
     override fun onDescriptionChange(value: String) {
-        description.value = value
+        _description.value = value
     }
 
     override fun onPriceChange(value: String) {
-        priceInvalid.value = false
-        price.value = value
+        _priceInvalid.value = false
+        _price.value = value
     }
 
     override fun onAvailableChange(value: Boolean) {
-        available.value = value
+        _available.value = value
     }
 
     override fun onPickImage() {
@@ -68,7 +77,7 @@ class ItemEditViewModel(
     private suspend fun pickImage() {
         val result = imagePicker.pickImage()
         if(result.isSuccess)
-            imageUri.value = result.getOrNull()
+            _imageUri.value = result.getOrNull()
         else
             snackBarMessage.emit(StringResource(R.string.no_picture_selected))
     }
@@ -86,7 +95,7 @@ class ItemEditViewModel(
     }
 
     private suspend fun store() {
-        imageUri.value?.also { image ->
+        _imageUri.value?.also { image ->
             val result = initialItem?.let { initial ->
                 val newImage = if(image != initial.pathDownload?.toUri()) image else null
                 updater.updateItem(
@@ -136,7 +145,7 @@ class ItemEditViewModel(
     private fun inputsInvalid() = nameInvalid.value || priceInvalid.value
 
     private fun highlightInvalidValues() {
-        nameInvalid.value = name.value.isBlank()
-        priceInvalid.value = price.value.isBlank() || priceRegex.containsMatchIn(price.value).not()
+        _nameInvalid.value = name.value.isBlank()
+        _priceInvalid.value = price.value.isBlank() || priceRegex.containsMatchIn(price.value).not()
     }
 }

@@ -12,6 +12,8 @@ import dev.catsuperberg.e_commerce_exercise.client.presentation.ui.transformatio
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class OrderFormViewModel(
@@ -19,13 +21,19 @@ class OrderFormViewModel(
     private val item: Item,
     private val orderRegistration: IOrderRegistration
 ) : ViewModel(), IOrderFormViewModel {
-    override val customerName: MutableStateFlow<String> = MutableStateFlow("")
-    override val customerPhone: MutableStateFlow<TextFieldValue> = MutableStateFlow(TextFieldValue(""))
-    override val customerEmail: MutableStateFlow<String> = MutableStateFlow("")
+    private val _customerName: MutableStateFlow<String> = MutableStateFlow("")
+    override val customerName: StateFlow<String> = _customerName.asStateFlow()
+    private val _customerPhone: MutableStateFlow<TextFieldValue> = MutableStateFlow(TextFieldValue(""))
+    override val customerPhone: StateFlow<TextFieldValue> = _customerPhone.asStateFlow()
+    private val _customerEmail: MutableStateFlow<String> = MutableStateFlow("")
+    override val customerEmail: StateFlow<String> = _customerEmail.asStateFlow()
 
-    override val customerNameInvalid: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    override val customerPhoneInvalid: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    override val customerEmailInvalid: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    private val _customerNameInvalid: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    override val customerNameInvalid: StateFlow<Boolean> = _customerNameInvalid.asStateFlow()
+    private val _customerPhoneInvalid: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    override val customerPhoneInvalid: StateFlow<Boolean> = _customerPhoneInvalid.asStateFlow()
+    private val _customerEmailInvalid: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    override val customerEmailInvalid: StateFlow<Boolean> = _customerEmailInvalid.asStateFlow()
 
     override val itemName: String = item.name
     override val itemPrice: String = String.format("%.2f", item.price)
@@ -36,19 +44,19 @@ class OrderFormViewModel(
     private var orderJob: Job? = null
 
     override fun onNameChange(value: String) {
-        customerNameInvalid.value = false
-        customerName.value = value
+        _customerNameInvalid.value = false
+        _customerName.value = value
     }
 
     override fun onPhoneChange(value: TextFieldValue) {
-        customerPhoneInvalid.value = false
+        _customerPhoneInvalid.value = false
         if (PhoneVisualTransformation.isPartialPhone(value.text))
-            customerPhone.value = value
+            _customerPhone.value = value
     }
 
     override fun onEmailChange(value: String) {
-        customerEmailInvalid.value = false
-        customerEmail.value = value
+        _customerEmailInvalid.value = false
+        _customerEmail.value = value
     }
 
     override fun onSendOrder() {
@@ -82,9 +90,9 @@ class OrderFormViewModel(
         customerNameInvalid.value || customerPhoneInvalid.value || customerEmailInvalid.value
 
     private fun highlightInvalidValues() {
-        customerNameInvalid.value = customerName.value.isBlank()
-        customerPhoneInvalid.value = PhoneVisualTransformation.isPhone(customerPhone.value.text).not()
-        customerEmailInvalid.value = customerEmail.value.let {
+        _customerNameInvalid.value = customerName.value.isBlank()
+        _customerPhoneInvalid.value = PhoneVisualTransformation.isPhone(customerPhone.value.text).not()
+        _customerEmailInvalid.value = customerEmail.value.let {
             it.isBlank() || android.util.Patterns.EMAIL_ADDRESS.matcher(it).matches().not()
         }
     }

@@ -9,10 +9,10 @@ import coil.request.CachePolicy
 import dev.catsuperberg.e_commerce_exercise.client.data.repository.item.IItemEndPoint
 import dev.catsuperberg.e_commerce_exercise.client.data.repository.item.IItemImageEmbedding
 import dev.catsuperberg.e_commerce_exercise.client.data.repository.item.IItemMapper
+import dev.catsuperberg.e_commerce_exercise.client.data.repository.item.IgnoreInvalidItemMapper
 import dev.catsuperberg.e_commerce_exercise.client.data.repository.item.ItemEndPoint
 import dev.catsuperberg.e_commerce_exercise.client.data.repository.item.ItemImageEmbedding
 import dev.catsuperberg.e_commerce_exercise.client.data.repository.item.ItemPagingSource
-import dev.catsuperberg.e_commerce_exercise.client.data.repository.item.PlaceholderItemMapper
 import dev.catsuperberg.e_commerce_exercise.client.data.repository.order.IOrderEndPoint
 import dev.catsuperberg.e_commerce_exercise.client.data.repository.order.IOrderMapper
 import dev.catsuperberg.e_commerce_exercise.client.data.repository.order.OrderEndPoint
@@ -80,7 +80,7 @@ class MainApp : Application() {
         Coil.setImageLoader(imageLoader)
 
         val mainModule = module {
-            factoryOf(::PlaceholderItemMapper) bind IItemMapper::class
+            factoryOf(::IgnoreInvalidItemMapper) bind IItemMapper::class
             factory {
                 PaginatedItemProvider(
                     ItemPagingSource(ItemPagingSource.itemQuery, get()),
