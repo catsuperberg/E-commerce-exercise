@@ -1,6 +1,5 @@
 package dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.order.form
 
-import android.util.Log
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,6 +8,7 @@ import dev.catsuperberg.e_commerce_exercise.client.domain.model.Item
 import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.IOrderRegistration
 import dev.catsuperberg.e_commerce_exercise.client.presentation.ui.transformation.PhoneVisualTransformation
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
@@ -28,6 +28,8 @@ class OrderFormViewModel(
     override val itemName: String = item.name
     override val itemPrice: String = String.format("%.2f", item.price)
     override val itemId: String = item.id
+
+    override val snackBarMessage: MutableSharedFlow<String> = MutableSharedFlow(1)
 
     private var orderJob: Job? = null
 
@@ -71,7 +73,7 @@ class OrderFormViewModel(
         if(result.isSuccess)
             navCallbacks.onOrderOpened()
         else
-            Log.d("E", "заказ не был обработан")
+            snackBarMessage.emit("заказ не был обработан")
     }
 
     private fun contactDetailsInvalid() =

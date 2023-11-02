@@ -1,5 +1,6 @@
 package dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.auth
 
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 
 interface IAuthViewModel {
@@ -14,6 +15,8 @@ interface IAuthViewModel {
     val emailInvalid: StateFlow<Boolean>
     val passwordInvalid: StateFlow<Boolean>
     val repeatPasswordInvalid: StateFlow<Boolean>
+
+    val snackBarMessage: SharedFlow<String>
 
     fun onSignUpChange(value: Boolean)
     fun onEmailChange(value: String)

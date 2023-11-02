@@ -1,10 +1,10 @@
 package dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.auth
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.catsuperberg.e_commerce_exercise.client.domain.service.IAccountService
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
@@ -23,6 +23,8 @@ class AuthViewModel(
     override val emailInvalid: MutableStateFlow<Boolean> = MutableStateFlow(false)
     override val passwordInvalid: MutableStateFlow<Boolean> = MutableStateFlow(false)
     override val repeatPasswordInvalid: MutableStateFlow<Boolean> = MutableStateFlow(false)
+
+    override val snackBarMessage: MutableSharedFlow<String> = MutableSharedFlow(1)
 
     private var authJob: Job? = null
 
@@ -70,7 +72,7 @@ class AuthViewModel(
         if(result.isSuccess)
             navCallbacks.onBack()
         else
-            Log.d("E", "Sign in failed")
+            snackBarMessage.emit("вход не осуществлён")
     }
 
     private suspend fun singUp() {
@@ -78,7 +80,7 @@ class AuthViewModel(
         if(result.isSuccess)
             navCallbacks.onBack()
         else
-            Log.d("E", "Sign up failed")
+            snackBarMessage.emit("регистрация не осуществлена")
     }
 
     override fun onBack() {

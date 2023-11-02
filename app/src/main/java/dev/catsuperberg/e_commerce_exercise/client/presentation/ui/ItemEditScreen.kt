@@ -26,9 +26,13 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -40,13 +44,23 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import dev.catsuperberg.e_commerce_exercise.client.R
+import dev.catsuperberg.e_commerce_exercise.client.presentation.ui.components.AppSnackbar
 import dev.catsuperberg.e_commerce_exercise.client.presentation.ui.components.TitledAppBar
 import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.item.edit.IItemEditViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ItemEditScreen(viewModel: IItemEditViewModel) {
+    val snackbarHostState = remember { SnackbarHostState() }
+    LaunchedEffect(true) { viewModel.snackBarMessage.collect(snackbarHostState::showSnackbar) }
     Scaffold(
+        snackbarHost = {
+            SnackbarHost(
+                hostState = snackbarHostState,
+                snackbar = { data -> AppSnackbar(data) },
+                modifier = Modifier.padding(horizontal = 32.dp, vertical = 120.dp)
+            )
+        },
         topBar = { TitledAppBar(title = stringResource(R.string.item_edit), onBack = viewModel::onBack) }
     ) { innerPadding ->
         Column(

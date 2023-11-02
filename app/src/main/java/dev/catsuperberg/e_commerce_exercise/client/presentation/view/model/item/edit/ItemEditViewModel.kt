@@ -1,7 +1,6 @@
 package dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.item.edit
 
 import android.net.Uri
-import android.util.Log
 import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,6 +9,7 @@ import dev.catsuperberg.e_commerce_exercise.client.domain.model.NewItem
 import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.IImagePicker
 import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.IItemUpdater
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
@@ -34,6 +34,8 @@ class ItemEditViewModel(
     override val priceInvalid: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     override val imageUri: MutableStateFlow<Uri?> = MutableStateFlow(initialItem?.pathDownload?.toUri())
+
+    override val snackBarMessage: MutableSharedFlow<String> = MutableSharedFlow(1)
 
     private var storeJob: Job? = null
 
@@ -66,7 +68,7 @@ class ItemEditViewModel(
         if(result.isSuccess)
             imageUri.value = result.getOrNull()
         else
-            Log.d("E", "изображение не выбрано")
+            snackBarMessage.emit("изображение не выбрано")
     }
 
     override fun onApply() {
@@ -107,8 +109,8 @@ class ItemEditViewModel(
             if(result.isSuccess)
                 navCallbacks.onBack()
             else
-                Log.d("E", "не удалось загрузить товар")
-        } ?: Log.d("E", "не выбрано изображение товара")
+                snackBarMessage.emit("не удалось загрузить товар")
+        } ?: snackBarMessage.emit("не выбрано изображение товара")
     }
 
     override fun onDelete() {
@@ -126,7 +128,7 @@ class ItemEditViewModel(
         if(result.isSuccess)
             navCallbacks.onBack()
         else
-            Log.d("E", "не удалось удалить товар")
+            snackBarMessage.emit("не удалось удалить товар")
     }
 
     private fun inputsInvalid() = nameInvalid.value || priceInvalid.value
