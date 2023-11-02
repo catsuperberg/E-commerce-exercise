@@ -23,8 +23,9 @@ interface IItemEditViewModel {
     fun onPickImage()
     fun onApply()
     fun onDelete()
+    fun onBack()
 
     data class NavCallbacks(
-        val onSuccess: () -> Unit,
+        val onBack: () -> Unit
     )
 }

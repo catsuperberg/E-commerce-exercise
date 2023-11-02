@@ -59,6 +59,10 @@ class OrderFormViewModel(
         }
     }
 
+    override fun onBack() {
+        navCallbacks.onBack()
+    }
+
     private suspend fun registerOrder() {
         val result = orderRegistration.open(
             item,

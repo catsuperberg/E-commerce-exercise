@@ -9,8 +9,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -24,32 +26,37 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import dev.catsuperberg.e_commerce_exercise.client.R
+import dev.catsuperberg.e_commerce_exercise.client.presentation.ui.components.TitledAppBar
 import dev.catsuperberg.e_commerce_exercise.client.presentation.ui.transformation.PhoneVisualTransformation
 import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.order.form.IOrderFormViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OrderFormScreen(viewModel: IOrderFormViewModel) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(vertical = 48.dp, horizontal = 32.dp),
-        verticalArrangement = Arrangement.SpaceBetween
-    ) {
-        CustomerContactInfoInputs(viewModel, modifier = Modifier.weight(1f))
-
-        Column (verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            ItemDetailsReminder(viewModel.itemName, viewModel.itemPrice, viewModel.itemId, Modifier.padding(16.dp))
-            Button(
-                onClick = { viewModel.onSendOrder() },
-                shape = MaterialTheme.shapes.large,
-                contentPadding = PaddingValues(16.dp),
-                modifier = Modifier
-                    .fillMaxWidth(),
-            ) {
-                Text(
-                    text = stringResource(R.string.buy).uppercase(),
-                    style = MaterialTheme.typography.headlineSmall,
-                )
+    Scaffold(
+        topBar = { TitledAppBar(title = stringResource(R.string.order_form), onBack = viewModel::onBack) }
+    ) { innerPadding ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = innerPadding.calculateTopPadding() + 48.dp, start = 32.dp, bottom = 32.dp, end = 32.dp),
+            verticalArrangement = Arrangement.SpaceBetween
+        ) {
+            CustomerContactInfoInputs(viewModel, modifier = Modifier.weight(1f))
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                ItemDetailsReminder(viewModel.itemName, viewModel.itemPrice, viewModel.itemId, Modifier.padding(16.dp))
+                Button(
+                    onClick = { viewModel.onSendOrder() },
+                    shape = MaterialTheme.shapes.large,
+                    contentPadding = PaddingValues(16.dp),
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                ) {
+                    Text(
+                        text = stringResource(R.string.buy).uppercase(),
+                        style = MaterialTheme.typography.headlineSmall,
+                    )
+                }
             }
         }
     }

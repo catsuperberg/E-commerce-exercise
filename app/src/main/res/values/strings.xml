@@ -27,8 +27,6 @@
     <string name="item_description">краткое описание товара</string>
     <string name="item_id_display">арт.: %1$s</string>
     <string name="auto_generation">будет присвоен автоматически</string>
-    <string name="order_processing_fail">заказ не был обработан</string>
-    <string name="no_image_selected">изображение не выбрано</string>
     <string name="new_item_image">изображение нового товара</string>
     <string name="pick_image">выбор изображения</string>
     <string name="create_item">создать товар</string>
@@ -36,4 +34,6 @@
     <string name="order_management">заказы</string>
     <string name="composed_message">"ВууУууу, смотри что я нашёл в магазине Бу́тик.\nЭто %1$s и стоит всего %2$s забытых завтраков."</string>
     <string name="auth">авторизация</string>
+    <string name="order_form">оформление заказа</string>
+    <string name="item_edit">редактор товара</string>
 </resources>

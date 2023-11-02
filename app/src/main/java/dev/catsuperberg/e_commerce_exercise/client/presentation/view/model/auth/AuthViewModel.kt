@@ -68,7 +68,7 @@ class AuthViewModel(
     private suspend fun singIn() {
         val result = accountService.signIn(email.value, password.value)
         if(result.isSuccess)
-            navCallbacks.onSuccess()
+            navCallbacks.onBack()
         else
             Log.d("E", "Sign in failed")
     }
@@ -76,7 +76,7 @@ class AuthViewModel(
     private suspend fun singUp() {
         val result = accountService.signUp(email.value, password.value)
         if(result.isSuccess)
-            navCallbacks.onSuccess()
+            navCallbacks.onBack()
         else
             Log.d("E", "Sign up failed")
     }

@@ -54,7 +54,7 @@ fun AuthScreen(viewModel: IAuthViewModel) {
             verticalArrangement = Arrangement.Center,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = innerPadding.calculateTopPadding(), start = 16.dp, end = 16.dp)
+                .padding(top = innerPadding.calculateTopPadding(), start = 32.dp, end = 32.dp)
         ) {
             AuthInputs(viewModel, isSignUp)
 

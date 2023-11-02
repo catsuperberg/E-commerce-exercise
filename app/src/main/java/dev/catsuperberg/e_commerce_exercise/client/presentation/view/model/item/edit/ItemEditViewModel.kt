@@ -105,7 +105,7 @@ class ItemEditViewModel(
                 )
 
             if(result.isSuccess)
-                navCallbacks.onSuccess()
+                navCallbacks.onBack()
             else
                 Log.d("E", "не удалось загрузить товар")
         } ?: Log.d("E", "не выбрано изображение товара")
@@ -117,10 +117,14 @@ class ItemEditViewModel(
         }
     }
 
+    override fun onBack() {
+        navCallbacks.onBack()
+    }
+
     private suspend fun dispose(id: String) {
         val result = updater.disposeOfItem(id)
         if(result.isSuccess)
-            navCallbacks.onSuccess()
+            navCallbacks.onBack()
         else
             Log.d("E", "не удалось удалить товар")
     }

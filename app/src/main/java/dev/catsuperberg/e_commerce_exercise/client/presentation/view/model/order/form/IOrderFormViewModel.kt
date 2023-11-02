@@ -21,8 +21,10 @@ interface IOrderFormViewModel {
     fun onEmailChange(value: String)
 
     fun onSendOrder()
+    fun onBack()
 
     data class NavCallbacks(
         val onOrderOpened: () -> Unit,
+        val onBack: () -> Unit,
     )
 }

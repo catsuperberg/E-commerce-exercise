@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -20,9 +21,11 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Photo
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -37,29 +40,33 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import dev.catsuperberg.e_commerce_exercise.client.R
+import dev.catsuperberg.e_commerce_exercise.client.presentation.ui.components.TitledAppBar
 import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.item.edit.IItemEditViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ItemEditScreen(viewModel: IItemEditViewModel) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(vertical = 48.dp, horizontal = 32.dp),
-        verticalArrangement = Arrangement.SpaceBetween
-    ) {
-        Image(viewModel, Modifier.weight(0.45f))
-        ItemDetailInputs(viewModel, modifier = Modifier.weight(1f))
-
-        Buttons(viewModel)
+    Scaffold(
+        topBar = { TitledAppBar(title = stringResource(R.string.item_edit), onBack = viewModel::onBack) }
+    ) { innerPadding ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = innerPadding.calculateTopPadding() + 32.dp, start = 32.dp, bottom = 32.dp, end = 32.dp),
+            verticalArrangement = Arrangement.SpaceBetween
+        ) {
+            Image(viewModel, Modifier.weight(0.6f))
+            ItemDetailInputs(viewModel, modifier = Modifier.weight(1f))
+            Buttons(viewModel)
+        }
     }
 }
 
 @Composable
 private fun Buttons(viewModel: IItemEditViewModel) {
     Row(
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-        modifier = Modifier
-            .fillMaxWidth()
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        modifier = Modifier.fillMaxWidth().heightIn(32.dp, 56.dp)
     ) {
         if(viewModel.id != null) {
             Button(
@@ -72,7 +79,7 @@ private fun Buttons(viewModel: IItemEditViewModel) {
                 Icon(
                     imageVector = Icons.Filled.Delete,
                     contentDescription = stringResource(R.string.delete_item),
-                    modifier = Modifier.size(32.dp)
+                    modifier = Modifier.fillMaxHeight()
                 )
             }
         }
@@ -81,8 +88,7 @@ private fun Buttons(viewModel: IItemEditViewModel) {
             onClick = viewModel::onApply,
             shape = MaterialTheme.shapes.large,
             contentPadding = PaddingValues(16.dp),
-            modifier = Modifier
-                .weight(1f),
+            modifier = Modifier.weight(1f).fillMaxHeight(),
         ) {
             Text(
                 text = stringResource(R.string.store_item).uppercase(),
@@ -95,7 +101,6 @@ private fun Buttons(viewModel: IItemEditViewModel) {
 @Composable
 private fun Image(viewModel: IItemEditViewModel, modifier: Modifier) {
     val pickedUri = viewModel.imageUri.collectAsState()
-
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier.fillMaxWidth()

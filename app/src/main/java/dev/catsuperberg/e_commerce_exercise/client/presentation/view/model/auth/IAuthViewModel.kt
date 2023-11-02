@@ -24,7 +24,6 @@ interface IAuthViewModel {
     fun onBack()
 
     data class NavCallbacks(
-        val onSuccess: () -> Unit,
         val onBack: () -> Unit
     )
 }

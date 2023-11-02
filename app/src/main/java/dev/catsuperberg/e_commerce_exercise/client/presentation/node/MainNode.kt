@@ -84,23 +84,21 @@ class MainNode(
             }
             is NavTarget.OrderFormScreen -> screenNode(buildContext) {
                 val callbacks = IOrderFormViewModel.NavCallbacks(
-                    onOrderOpened = { backStack.pop() }
+                    onOrderOpened = { backStack.pop() },
+                    onBack = { backStack.pop() }
                 )
                 OrderFormScreen(get { parametersOf(callbacks, navTarget.item) })
             }
             is NavTarget.AuthScreen -> screenNode(buildContext) {
-                val callbacks = IAuthViewModel.NavCallbacks(
-                    onSuccess = { backStack.pop() },
-                    onBack = { backStack.pop() }
-                )
+                val callbacks = IAuthViewModel.NavCallbacks(onBack = { backStack.pop() })
                 AuthScreen(get { parametersOf(callbacks) })
             }
             is NavTarget.ItemEditScreen -> screenNode(buildContext) {
-                val callbacks = IItemEditViewModel.NavCallbacks( onSuccess = { backStack.pop() })
+                val callbacks = IItemEditViewModel.NavCallbacks(onBack = { backStack.pop() })
                 ItemEditScreen(get { parametersOf(callbacks, navTarget.item) })
             }
             is NavTarget.OrdersScreen -> screenNode(buildContext) {
-                val callbacks = IOrdersViewModel.NavCallbacks( onBack = { backStack.pop() })
+                val callbacks = IOrdersViewModel.NavCallbacks(onBack = { backStack.pop() })
                 OrdersScreen(get { parametersOf(callbacks) })
             }
         }
