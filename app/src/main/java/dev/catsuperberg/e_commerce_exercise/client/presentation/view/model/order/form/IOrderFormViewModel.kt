@@ -1,6 +1,7 @@
 package dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.order.form
 
 import androidx.compose.ui.text.input.TextFieldValue
+import dev.catsuperberg.e_commerce_exercise.client.domain.service.UiText.StringResource
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -17,7 +18,7 @@ interface IOrderFormViewModel {
     val itemPrice: String
     val itemId: String
 
-    val snackBarMessage: SharedFlow<String>
+    val snackBarMessage: SharedFlow<StringResource>
 
     fun onNameChange(value: String)
     fun onPhoneChange(value: TextFieldValue)

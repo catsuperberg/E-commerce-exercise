@@ -22,6 +22,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -33,12 +34,16 @@ import dev.catsuperberg.e_commerce_exercise.client.presentation.ui.components.Ap
 import dev.catsuperberg.e_commerce_exercise.client.presentation.ui.components.TitledAppBar
 import dev.catsuperberg.e_commerce_exercise.client.presentation.ui.transformation.PhoneVisualTransformation
 import dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.order.form.IOrderFormViewModel
+import kotlinx.coroutines.flow.map
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OrderFormScreen(viewModel: IOrderFormViewModel) {
     val snackbarHostState = remember { SnackbarHostState() }
-    LaunchedEffect(true) { viewModel.snackBarMessage.collect(snackbarHostState::showSnackbar) }
+    val context = LocalContext.current
+    LaunchedEffect(true) {
+        viewModel.snackBarMessage.map { it.asString(context) }.collect(snackbarHostState::showSnackbar)
+    }
     Scaffold(
         snackbarHost = {
             SnackbarHost(

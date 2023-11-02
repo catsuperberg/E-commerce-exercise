@@ -1,6 +1,7 @@
 package dev.catsuperberg.e_commerce_exercise.client.presentation.view.model.item.edit
 
 import android.net.Uri
+import dev.catsuperberg.e_commerce_exercise.client.domain.service.UiText.StringResource
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -16,7 +17,7 @@ interface IItemEditViewModel {
 
     val imageUri: StateFlow<Uri?>
 
-    val snackBarMessage: SharedFlow<String>
+    val snackBarMessage: SharedFlow<StringResource>
 
     fun onNameChange(value: String)
     fun onDescriptionChange(value: String)

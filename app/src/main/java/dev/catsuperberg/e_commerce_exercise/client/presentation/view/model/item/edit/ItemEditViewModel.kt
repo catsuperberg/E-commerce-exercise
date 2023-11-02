@@ -4,8 +4,10 @@ import android.net.Uri
 import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dev.catsuperberg.e_commerce_exercise.client.R
 import dev.catsuperberg.e_commerce_exercise.client.domain.model.Item
 import dev.catsuperberg.e_commerce_exercise.client.domain.model.NewItem
+import dev.catsuperberg.e_commerce_exercise.client.domain.service.UiText.StringResource
 import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.IImagePicker
 import dev.catsuperberg.e_commerce_exercise.client.domain.usecase.IItemUpdater
 import kotlinx.coroutines.Job
@@ -35,7 +37,7 @@ class ItemEditViewModel(
 
     override val imageUri: MutableStateFlow<Uri?> = MutableStateFlow(initialItem?.pathDownload?.toUri())
 
-    override val snackBarMessage: MutableSharedFlow<String> = MutableSharedFlow(1)
+    override val snackBarMessage: MutableSharedFlow<StringResource> = MutableSharedFlow(1)
 
     private var storeJob: Job? = null
 
@@ -68,7 +70,7 @@ class ItemEditViewModel(
         if(result.isSuccess)
             imageUri.value = result.getOrNull()
         else
-            snackBarMessage.emit("изображение не выбрано")
+            snackBarMessage.emit(StringResource(R.string.no_picture_selected))
     }
 
     override fun onApply() {
@@ -109,8 +111,8 @@ class ItemEditViewModel(
             if(result.isSuccess)
                 navCallbacks.onBack()
             else
-                snackBarMessage.emit("не удалось загрузить товар")
-        } ?: snackBarMessage.emit("не выбрано изображение товара")
+                snackBarMessage.emit(StringResource(R.string.could_not_upload_item))
+        } ?: snackBarMessage.emit(StringResource(R.string.no_picture_selected))
     }
 
     override fun onDelete() {
@@ -128,7 +130,7 @@ class ItemEditViewModel(
         if(result.isSuccess)
             navCallbacks.onBack()
         else
-            snackBarMessage.emit("не удалось удалить товар")
+            snackBarMessage.emit(StringResource(R.string.could_not_delete_item))
     }
 
     private fun inputsInvalid() = nameInvalid.value || priceInvalid.value

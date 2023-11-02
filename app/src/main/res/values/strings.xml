@@ -36,4 +36,10 @@
     <string name="auth">авторизация</string>
     <string name="order_form">оформление заказа</string>
     <string name="item_edit">редактор товара</string>
+    <string name="failed_order_processing">заказ не был обработан</string>
+    <string name="sign_up_failed">регистрация не осуществлена</string>
+    <string name="sign_in_failed">вход не осуществлён</string>
+    <string name="no_picture_selected">изображение не выбрано</string>
+    <string name="could_not_upload_item">не удалось загрузить товар</string>
+    <string name="could_not_delete_item">не удалось удалить товар</string>
 </resources>
